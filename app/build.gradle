@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 
 android {
+
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
@@ -9,13 +12,75 @@ android {
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile file(KEY_STORE_PATH)
+            storePassword KEY_STORE_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL", "\"API_URL\""
+            signingConfig signingConfigs.releaseConfig
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-DEV"
+            buildConfigField "String", "API_URL", "\"API_URL\""
+        }
+    }
+
+    productFlavors {
+        devLocal {
+            applicationId = "br.com.rafael.pokedexgdgjf.devLocal"
+
+            resValue "string", "app_name", "Pokedex Local"
+        }
+        dev {
+            applicationId = "br.com.rafael.pokedexgdgjf.release"
+
+            resValue "string", "app_name", "Pokedex GDG JF"
+        }
+    }
+
+    sourceSets {
+        def commonTestDir = 'src/commonTest/java'
+        test {
+            java.srcDir commonTestDir
+        }
+        androidTest {
+            java.srcDir commonTestDir
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release') && !variant.getFlavors().get(0).name.equals('dev')) {
+            variant.setIgnore(true);
+        }
+    }
+
+    //Needed because of this https://github.com/square/okio/issues/58
+    lintOptions {
+        warning 'InvalidPackage'
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.google.dagger/dagger/pom.properties'
+        exclude 'META-INF/maven/com.google.dagger/dagger/pom.xml'
     }
 }
 
