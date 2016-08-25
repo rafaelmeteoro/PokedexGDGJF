@@ -1,3 +1,8 @@
 <resources>
-    <!--<string name="app_name">PokedexGDGJF</string>-->
+
+    <!-- View Error -->
+    <string name="view_erro_text">Ocorreu um erro</string>
+
+    <!-- View Empty -->
+    <string name="view_empty_text">Lista Vazia</string>
 </resources>

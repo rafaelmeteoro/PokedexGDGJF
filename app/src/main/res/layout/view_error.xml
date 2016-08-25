@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/error_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableTop="@drawable/ic_sentiment_very_dissatisfied_gray"
+        android:gravity="center"
+        android:padding="@dimen/view_erro_padding"
+        android:text="@string/view_erro_text"
+        android:textSize="@dimen/view_error_text_size" />
+
+</merge>
