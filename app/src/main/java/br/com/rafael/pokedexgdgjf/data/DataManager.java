@@ -1,8 +1,11 @@
 package br.com.rafael.pokedexgdgjf.data;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import br.com.rafael.pokedexgdgjf.data.local.PokemonDao;
 import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.data.remote.ApiProvider;
@@ -15,10 +18,12 @@ import rx.Observable;
 public class DataManager {
 
     private final ApiProvider mApiProvider;
+    private final PokemonDao mPokemonDao;
 
     @Inject
-    public DataManager(ApiProvider apiProvider) {
+    public DataManager(ApiProvider apiProvider, PokemonDao pokemonDao) {
         mApiProvider = apiProvider;
+        mPokemonDao = pokemonDao;
     }
 
     public Observable<Pokedex> getPodedex() {
@@ -33,5 +38,17 @@ public class DataManager {
         return mApiProvider
                 .getPokedexService()
                 .getPokemon(pokemonId);
+    }
+
+    public Observable<List<Pokemon>> getPokemonsSaved() {
+        return Observable.just(mPokemonDao.getPokemonsSaved());
+    }
+
+    public Observable<Boolean> saveUpdatePokemon(Pokemon pokemon) {
+        return Observable.just(mPokemonDao.saveUpdatePokemon(pokemon));
+    }
+
+    public Observable<Boolean> deletePokemon(Pokemon pokemon) {
+        return Observable.just(mPokemonDao.deletePokemon(pokemon));
     }
 }

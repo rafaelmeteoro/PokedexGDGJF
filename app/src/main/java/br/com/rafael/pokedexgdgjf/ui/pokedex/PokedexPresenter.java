@@ -8,6 +8,7 @@ import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by rafael on 8/28/16.
@@ -38,6 +39,7 @@ public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> impl
 
                     @Override
                     public void onError(Throwable e) {
+                        Timber.e(e, "Erro ao carregar pokedex");
                         hideProgress();
                         showError();
                     }

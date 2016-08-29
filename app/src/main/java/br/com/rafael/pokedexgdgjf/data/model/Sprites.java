@@ -2,10 +2,12 @@ package br.com.rafael.pokedexgdgjf.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by rafael on 8/28/16.
  **/
-public class Sprites {
+public class Sprites extends RealmObject {
 
     private static final String BACK_FEMALE = "back_female";
     private static final String BACK_SHINY_FEMALE = "back_shiny_female";
