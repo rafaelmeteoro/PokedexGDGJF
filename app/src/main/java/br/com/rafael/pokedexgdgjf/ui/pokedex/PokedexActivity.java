@@ -20,6 +20,7 @@ import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
 import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
+import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -69,8 +70,6 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-
-        mErrorView.setVisibility(View.GONE);
     }
 
     @Override
@@ -91,7 +90,7 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
 
     @Override
     public void onPokemonClick(PokemonEntrie pokemonEntrie) {
-        Toast.makeText(this, pokemonEntrie.getPokemonSpecies().getName(), Toast.LENGTH_SHORT).show();
+        startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
     }
 
     @Override

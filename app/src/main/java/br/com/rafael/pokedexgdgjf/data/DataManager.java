@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
+import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.data.remote.ApiProvider;
 import rx.Observable;
 
@@ -26,5 +27,11 @@ public class DataManager {
         return mApiProvider
                 .getPokedexService()
                 .getPokedex(pokedexId);
+    }
+
+    public Observable<Pokemon> getPokemon(int pokemonId) {
+        return mApiProvider
+                .getPokedexService()
+                .getPokemon(pokemonId);
     }
 }

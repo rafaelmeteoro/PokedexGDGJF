@@ -6,6 +6,7 @@ import br.com.rafael.pokedexgdgjf.injection.ActivityContext;
 import br.com.rafael.pokedexgdgjf.injection.PerActivity;
 import br.com.rafael.pokedexgdgjf.injection.module.ActivityModule;
 import br.com.rafael.pokedexgdgjf.ui.pokedex.PokedexActivity;
+import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import dagger.Component;
 import retrofit2.Retrofit;
 
@@ -17,6 +18,8 @@ import retrofit2.Retrofit;
 public interface ActivityComponent {
 
     void inject(PokedexActivity pokedexActivity);
+
+    void inject(PokemonActivity pokemonActivity);
 
     Retrofit retrofit();
 

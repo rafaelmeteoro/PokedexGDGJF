@@ -27,4 +27,20 @@ public class Pokemon {
 
     @SerializedName(SPRITES)
     private Sprites sprites;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Sprites getSprites() {
+        return sprites;
+    }
 }

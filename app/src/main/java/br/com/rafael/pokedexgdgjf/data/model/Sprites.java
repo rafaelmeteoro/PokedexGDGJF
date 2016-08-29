@@ -39,4 +39,8 @@ public class Sprites {
 
     @SerializedName(FRONT_SHINY)
     private String frontShiny;
+
+    public String getFrontDefault() {
+        return frontDefault;
+    }
 }

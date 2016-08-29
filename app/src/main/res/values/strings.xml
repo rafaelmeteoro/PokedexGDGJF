@@ -13,4 +13,11 @@
     <!-- Layout Item Pokedex -->
     <string name="layout_item_pokedex_image_format" formatted="false">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%d.png</string>
 
+    <!-- Merge Pokemon View -->
+    <string name="merge_pokemon_view_weight">Weight:</string>
+    <string name="merge_pokemon_view_height">Height:</string>
+
+    <!-- Activity Pokemon -->
+    <string name="activity_pokemon_load_error">Ocorreu algum erro ao carregar o pokemon. Tente novamente.</string>
+
 </resources>
