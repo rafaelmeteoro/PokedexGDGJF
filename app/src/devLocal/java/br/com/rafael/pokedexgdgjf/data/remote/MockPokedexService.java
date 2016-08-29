@@ -37,6 +37,15 @@ public class MockPokedexService implements PokedexService {
 
     @Override
     public Observable<Pokemon> getPokemon(@Path("id") int id) {
-        return null;
+        String pokemonJson;
+        Pokemon pokemon;
+        try {
+            pokemonJson = AssetsHelper.getStringFromAssets(mContext, "pokemon_success.json");
+            Gson gson = new Gson();
+            pokemon = gson.fromJson(pokemonJson, Pokemon.class);
+            return Observable.just(pokemon);
+        } catch (Exception e) {
+            return Observable.error(e);
+        }
     }
 }
