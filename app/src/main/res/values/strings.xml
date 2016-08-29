@@ -11,6 +11,6 @@
     <string name="activity_pokedex_load_list_empty">Lista Vazia</string>
 
     <!-- Layout Item Pokedex -->
-    <string name="layout_item_pokedex_lbl_nome">Nome:</string>
+    <string name="layout_item_pokedex_image_format" formatted="false">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%d.png</string>
 
 </resources>

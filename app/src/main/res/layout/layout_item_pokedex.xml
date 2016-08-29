@@ -11,18 +11,23 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/layout_item_pokedex_padding">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_pokemon"
+            android:layout_width="@dimen/layout_item_pokedex_image_width_height"
+            android:layout_height="@dimen/layout_item_pokedex_image_width_height"
             android:layout_marginEnd="@dimen/layout_item_pokedex_margin_right_name"
             android:layout_marginRight="@dimen/layout_item_pokedex_margin_right_name"
-            android:text="@string/layout_item_pokedex_lbl_nome" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/pokeball" />
 
         <TextView
             android:id="@+id/pokemon_name"
+            android:textAllCaps="true"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -9,7 +9,9 @@
 
     <!-- Layout Item Pokedex -->
     <dimen name="layout_item_pokedex_padding">16dp</dimen>
-    <dimen name="layout_item_pokedex_margin_right_name">10dp</dimen>
+    <dimen name="layout_item_pokedex_margin_right_name">20dp</dimen>
     <dimen name="layout_item_pokedex_margin_card">8dp</dimen>
     <dimen name="layout_item_pokedex_elevation">4dp</dimen>
+    <dimen name="layout_item_pokedex_image_width_height">50dp</dimen>
+
 </resources>

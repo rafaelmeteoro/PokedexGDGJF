@@ -16,6 +16,10 @@ public class PokemonEntrie {
     @SerializedName(POKEMON_SPECIES)
     private PokemonSpecies pokemonSpecies;
 
+    public int getEntryNumber() {
+        return entryNumber;
+    }
+
     public PokemonSpecies getPokemonSpecies() {
         return pokemonSpecies;
     }
