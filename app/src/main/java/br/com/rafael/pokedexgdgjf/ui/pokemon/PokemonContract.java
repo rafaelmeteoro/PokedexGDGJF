@@ -24,9 +24,13 @@ public interface PokemonContract {
         void showPokemonWeight(int weight);
 
         void showPokemonHeight(int height);
+
+        void showMessage(int resId);
     }
 
     interface Presenter {
         void getPokemon(int pokemonId);
+
+        void savePokmon(Pokemon pokemon);
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -117,6 +118,7 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
                 onBackPressed();
                 return true;
             case R.id.menu_save:
+                mPresenter.savePokmon(mPokemon);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -177,5 +179,11 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
     @Override
     public void showPokemonHeight(int height) {
         pokemonHeight.setText(String.valueOf(height));
+    }
+
+    @Override
+    public void showMessage(int resId) {
+        Snackbar snackbar = Snackbar.make(mContentView, resId, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

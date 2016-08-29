@@ -21,5 +21,6 @@
     <!-- Activity Pokemon -->
     <string name="activity_pokemon_load_error">Ocorreu algum erro ao carregar o pokemon. Tente novamente.</string>
     <string name="activity_pokemon_menu_save">Save</string>
+    <string name="activity_pokemon_saved">Pokemon salvo</string>
 
 </resources>

@@ -2,6 +2,7 @@ package br.com.rafael.pokedexgdgjf.ui.pokemon;
 
 import javax.inject.Inject;
 
+import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
@@ -45,6 +46,34 @@ public class PokemonPresenter extends BaseRxPresenter<PokemonContract.View> impl
                     @Override
                     public void onNext(Pokemon pokemon) {
                         showPokemon(pokemon);
+                    }
+                });
+    }
+
+    @Override
+    public void savePokmon(Pokemon pokemon) {
+        checkViewAttached();
+
+        unsubscribe();
+        mSubscription = mDataManager.saveUpdatePokemon(pokemon)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean value) {
+                        if (value) {
+                            getMvpView().showMessage(R.string.activity_pokemon_saved);
+                        }
                     }
                 });
     }
