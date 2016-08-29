@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/layout_item_pokedex_margin_card_bigger"
+    android:elevation="@dimen/layout_item_pokedex_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/merge_pokemon_view_padding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_pokemon"
+            android:layout_width="@dimen/merge_pokemon_view_image_widht_heigh"
+            android:layout_height="@dimen/merge_pokemon_view_image_widht_heigh"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/merge_pokemon_view_image_margin_bottom"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pokeball"
+            app:civ_border_color="@android:color/black"
+            app:civ_border_width="@dimen/merge_pokemon_view_image_border_width" />
+
+        <TextView
+            android:id="@+id/pokemon_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/merge_pokemon_view_name_margin_bottom"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textSize="@dimen/merge_pokemon_view_name_text_size"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/merge_pokemon_view_weight_margin_bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/merge_pokemon_view_weight_margin_right"
+                android:layout_marginRight="@dimen/merge_pokemon_view_weight_margin_right"
+                android:text="@string/merge_pokemon_view_weight"
+                android:textSize="@dimen/merge_pokemon_view_weigth_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pokemon_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/merge_pokemon_view_weigth_text_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/merge_pokemon_view_height_margin_bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/merge_pokemon_view_height_margin_right"
+                android:layout_marginRight="@dimen/merge_pokemon_view_height_margin_right"
+                android:text="@string/merge_pokemon_view_height"
+                android:textSize="@dimen/merge_pokemon_view_height_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pokemon_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/merge_pokemon_view_height_text_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

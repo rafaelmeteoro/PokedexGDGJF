@@ -5,6 +5,7 @@ import android.content.Context;
 import br.com.rafael.pokedexgdgjf.injection.ActivityContext;
 import br.com.rafael.pokedexgdgjf.injection.PerActivity;
 import br.com.rafael.pokedexgdgjf.injection.module.ActivityModule;
+import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
 import br.com.rafael.pokedexgdgjf.ui.pokedex.PokedexActivity;
 import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import dagger.Component;
@@ -20,6 +21,8 @@ public interface ActivityComponent {
     void inject(PokedexActivity pokedexActivity);
 
     void inject(PokemonActivity pokemonActivity);
+
+    void inject(FavoritosActivity favoritosActivity);
 
     Retrofit retrofit();
 
