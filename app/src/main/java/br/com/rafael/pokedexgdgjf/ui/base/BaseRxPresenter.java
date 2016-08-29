@@ -29,15 +29,15 @@ public abstract class BaseRxPresenter<T extends MvpView> implements Presenter<T>
         mSubscription = null;
     }
 
-    public boolean isViewAttached() {
+    protected boolean isViewAttached() {
         return mMvpView != null;
     }
 
-    public T getMvpView() {
+    protected T getMvpView() {
         return mMvpView;
     }
 
-    public void checkViewAttached() {
+    protected void checkViewAttached() {
         if (!isViewAttached()) throw new MvpViewNotAttachedException();
     }
 

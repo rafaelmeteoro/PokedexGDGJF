@@ -9,8 +9,12 @@ import java.util.List;
  **/
 public class Pokedex {
 
+    private static final String ID = "id";
     private static final String NAME = "name";
     private static final String POKEMON_ENTRIES = "pokemon_entries";
+
+    @SerializedName(ID)
+    private int id;
 
     @SerializedName(NAME)
     private String name;

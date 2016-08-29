@@ -2,10 +2,12 @@ package br.com.rafael.pokedexgdgjf;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 
 import br.com.rafael.pokedexgdgjf.injection.component.ApplicationComponent;
 import br.com.rafael.pokedexgdgjf.injection.component.DaggerApplicationComponent;
 import br.com.rafael.pokedexgdgjf.injection.module.ApplicationModule;
+import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
 import timber.log.Timber;
 
 /**
@@ -20,10 +22,16 @@ public class PokedexApplication extends Application {
         super.onCreate();
 
         if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+        initDagger();
+    }
 
+    private void initDagger() {
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .networkModule(new NetworkModule(BuildConfig.API_URL))
                 .build();
+
+        mApplicationComponent.inject(this);
     }
 
     public static PokedexApplication get(Context context) {
@@ -35,6 +43,7 @@ public class PokedexApplication extends Application {
     }
 
     // Needed to replace the component with a test specific one
+    @VisibleForTesting
     public void setComponent(ApplicationComponent applicationComponent) {
         mApplicationComponent = applicationComponent;
     }

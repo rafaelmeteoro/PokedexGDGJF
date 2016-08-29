@@ -28,7 +28,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_URL", "\"API_URL\""
+            buildConfigField "String", "API_URL", "\"http://pokeapi.co/api/v2/\""
             signingConfig signingConfigs.releaseConfig
         }
         debug {
@@ -36,7 +36,7 @@ android {
             minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEV"
-            buildConfigField "String", "API_URL", "\"API_URL\""
+            buildConfigField "String", "API_URL", "\"http://pokeapi.co/api/v2/\""
         }
     }
 
@@ -88,7 +88,7 @@ dependencies {
 
     final SUPPORT_LIBRARY_VERSION = '24.2.0'
     final DAGGER_VERSION = '2.2'
-    final RETROFIT_VERSION = '2.1.0'
+    final RETROFIT_VERSION = '2.0.1'
     final OKHTTP_VERSION = '2.7.0'
     final JUNIT_VERSION = '4.12'
     final ESPRESSO_VERSION = '2.2.1'

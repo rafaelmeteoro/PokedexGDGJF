@@ -6,10 +6,8 @@ import com.google.gson.GsonBuilder;
 import javax.inject.Singleton;
 
 import br.com.rafael.pokedexgdgjf.BuildConfig;
-import br.com.rafael.pokedexgdgjf.PokedexApplication;
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -30,13 +28,6 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Cache provideOkHttpCache(PokedexApplication application) {
-        int cacheSize = 10 * 1024 * 1024;
-        return new Cache(application.getCacheDir(), cacheSize);
-    }
-
-    @Provides
-    @Singleton
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder.create();
@@ -52,9 +43,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(Cache cache, HttpLoggingInterceptor loggin) {
+    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggin) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
-        client.cache(cache);
         client.addInterceptor(loggin);
         return client.build();
     }
