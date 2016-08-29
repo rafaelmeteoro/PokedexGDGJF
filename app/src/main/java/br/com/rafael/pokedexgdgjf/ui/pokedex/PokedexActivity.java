@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by rafael on 8/28/16.
  **/
-public class PokedexActivity extends BaseMvpActivity implements PokedexContract.View {
+public class PokedexActivity extends BaseMvpActivity implements PokedexContract.View, PokedexAdapter.PokedexItemClickListener {
 
     @Inject
     protected PokedexPresenter mPresenter;
@@ -63,6 +64,7 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     }
 
     private void setupViews() {
+        mAdapter.setListener(this);
         mContentView.setEnabled(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -85,6 +87,11 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     @OnClick(R.id.error_view)
     public void onReloadClick() {
         mPresenter.getPokedex();
+    }
+
+    @Override
+    public void onPokemonClick(PokemonEntrie pokemonEntrie) {
+        Toast.makeText(this, pokemonEntrie.getPokemonSpecies().getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
