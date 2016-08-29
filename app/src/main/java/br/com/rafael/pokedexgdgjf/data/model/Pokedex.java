@@ -21,4 +21,12 @@ public class Pokedex {
 
     @SerializedName(POKEMON_ENTRIES)
     private List<PokemonEntrie> pokemonEntries;
+
+    public List<PokemonEntrie> getPokemonEntries() {
+        return pokemonEntries;
+    }
+
+    public boolean hasPokemons() {
+        return pokemonEntries != null && !pokemonEntries.isEmpty();
+    }
 }

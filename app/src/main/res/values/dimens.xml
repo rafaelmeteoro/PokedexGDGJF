@@ -6,4 +6,10 @@
     <!-- View Error -->
     <dimen name="view_error_text_size">20sp</dimen>
     <dimen name="view_erro_padding">16dp</dimen>
+
+    <!-- Layout Item Pokedex -->
+    <dimen name="layout_item_pokedex_padding">16dp</dimen>
+    <dimen name="layout_item_pokedex_margin_right_name">10dp</dimen>
+    <dimen name="layout_item_pokedex_margin_card">8dp</dimen>
+    <dimen name="layout_item_pokedex_elevation">4dp</dimen>
 </resources>

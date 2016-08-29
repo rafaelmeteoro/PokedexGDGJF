@@ -15,4 +15,8 @@ public class PokemonEntrie {
 
     @SerializedName(POKEMON_SPECIES)
     private PokemonSpecies pokemonSpecies;
+
+    public PokemonSpecies getPokemonSpecies() {
+        return pokemonSpecies;
+    }
 }

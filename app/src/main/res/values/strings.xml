@@ -5,4 +5,12 @@
 
     <!-- View Empty -->
     <string name="view_empty_text">Lista Vazia</string>
+
+    <!-- Activity Pokedex -->
+    <string name="activity_pokedex_load_list_error">Ocorreu algum erro ao carregar a lista. Tente novamente.</string>
+    <string name="activity_pokedex_load_list_empty">Lista Vazia</string>
+
+    <!-- Layout Item Pokedex -->
+    <string name="layout_item_pokedex_lbl_nome">Nome:</string>
+
 </resources>

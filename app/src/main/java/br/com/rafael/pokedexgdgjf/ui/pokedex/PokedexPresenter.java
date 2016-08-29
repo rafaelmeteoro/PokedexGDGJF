@@ -24,6 +24,7 @@ public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> impl
     @Override
     public void getPokedex() {
         checkViewAttached();
+        showProgress();
 
         unsubscribe();
         mSubscription = mDataManager.getPodedex()
@@ -32,18 +33,35 @@ public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> impl
                 .subscribe(new Subscriber<Pokedex>() {
                     @Override
                     public void onCompleted() {
-
+                        hideProgress();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        String b = "";
+                        hideProgress();
+                        showError();
                     }
 
                     @Override
                     public void onNext(Pokedex pokedex) {
-                        String b = "";
+                        if (pokedex != null && pokedex.hasPokemons()) {
+                            getMvpView().showPokemonEntries(pokedex.getPokemonEntries());
+                        } else {
+                            getMvpView().showEmpty();
+                        }
                     }
                 });
+    }
+
+    private void showProgress() {
+        getMvpView().showProgress();
+    }
+
+    private void hideProgress() {
+        getMvpView().hideProgress();
+    }
+
+    private void showError() {
+        getMvpView().showError();
     }
 }

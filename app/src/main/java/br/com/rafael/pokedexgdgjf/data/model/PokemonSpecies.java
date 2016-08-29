@@ -15,4 +15,8 @@ public class PokemonSpecies {
 
     @SerializedName(URL)
     private String url;
+
+    public String getName() {
+        return name;
+    }
 }
