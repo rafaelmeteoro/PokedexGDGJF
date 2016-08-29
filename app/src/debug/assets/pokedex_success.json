@@ -1,0 +1,110 @@
+{
+  "name": "kanto",
+  "region": {},
+  "version_groups": [],
+  "is_main_series": true,
+  "descriptions": [],
+  "pokemon_entries": [
+    {
+      "entry_number": 1,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/1/",
+        "name": "bulbasaur"
+      }
+    },
+    {
+      "entry_number": 2,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/2/",
+        "name": "ivysaur"
+      }
+    },
+    {
+      "entry_number": 3,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/3/",
+        "name": "venusaur"
+      }
+    },
+    {
+      "entry_number": 4,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/4/",
+        "name": "charmander"
+      }
+    },
+    {
+      "entry_number": 5,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/5/",
+        "name": "charmeleon"
+      }
+    },
+    {
+      "entry_number": 6,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/6/",
+        "name": "charizard"
+      }
+    },
+    {
+      "entry_number": 7,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/7/",
+        "name": "squirtle"
+      }
+    },
+    {
+      "entry_number": 8,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/8/",
+        "name": "wartortle"
+      }
+    },
+    {
+      "entry_number": 9,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/9/",
+        "name": "blastoise"
+      }
+    },
+    {
+      "entry_number": 150,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/150/",
+        "name": "mewtwo"
+      }
+    },
+    {
+      "entry_number": 151,
+      "pokemon_species": {
+        "url": "http://pokeapi.co/api/v2/pokemon-species/151/",
+        "name": "mew"
+      }
+    }
+  ],
+  "id": 2,
+  "names": [
+    {
+      "name": "Kanto",
+      "language": {
+        "url": "http://pokeapi.co/api/v2/language/5/",
+        "name": "fr"
+      }
+    },
+    {
+      "name": "Kanto",
+      "language": {
+        "url": "http://pokeapi.co/api/v2/language/6/",
+        "name": "de"
+      }
+    },
+    {
+      "name": "Kanto",
+      "language": {
+        "url": "http://pokeapi.co/api/v2/language/9/",
+        "name": "en"
+      }
+    }
+  ]
+}
