@@ -1,5 +1,6 @@
 package br.com.rafael.pokedexgdgjf.ui.pokemon;
 
+import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.MvpView;
 
 /**
@@ -14,7 +15,7 @@ public interface PokemonContract {
 
         void showError();
 
-        void showPokemon();
+        void showPokemon(Pokemon pokemon);
 
         void showPokemonImage(String url);
 

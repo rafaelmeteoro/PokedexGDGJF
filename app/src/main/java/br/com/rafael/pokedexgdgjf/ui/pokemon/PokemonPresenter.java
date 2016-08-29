@@ -66,6 +66,6 @@ public class PokemonPresenter extends BaseRxPresenter<PokemonContract.View> impl
         getMvpView().showPokemonHeight(pokemon.getHeight());
         getMvpView().showPokemonWeight(pokemon.getWeight());
         getMvpView().showPokemonImage(pokemon.getSprites().getFrontDefault());
-        getMvpView().showPokemon();
+        getMvpView().showPokemon(pokemon);
     }
 }

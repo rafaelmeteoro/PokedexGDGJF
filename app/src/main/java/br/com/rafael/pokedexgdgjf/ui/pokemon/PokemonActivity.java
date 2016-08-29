@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -15,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
+import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
 import butterknife.Bind;
@@ -58,6 +62,7 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
     protected TextView pokemonHeight;
 
     private int mPokemonId;
+    private Pokemon mPokemon;
 
     public static Intent getStartIntent(Context context, int pokemonId) {
         Intent intent = new Intent(context, PokemonActivity.class);
@@ -92,6 +97,32 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
         activityComponent.inject(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_pokemon, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.menu_save).setVisible(mPokemon != null);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.menu_save:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @OnClick(R.id.error_view)
     public void onReloadClick() {
         mPresenter.getPokemon(mPokemonId);
@@ -118,8 +149,10 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
     }
 
     @Override
-    public void showPokemon() {
+    public void showPokemon(Pokemon pokemon) {
+        mPokemon = pokemon;
         mContentView.setVisibility(View.VISIBLE);
+        invalidateOptionsMenu();
     }
 
     @Override
