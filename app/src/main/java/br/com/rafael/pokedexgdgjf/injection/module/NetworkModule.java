@@ -1,5 +1,7 @@
 package br.com.rafael.pokedexgdgjf.injection.module;
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -8,6 +10,7 @@ import javax.inject.Singleton;
 import br.com.rafael.pokedexgdgjf.BuildConfig;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -20,10 +23,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
+    private static final int CACHE_SIZE_10_MB = 10 * 1024 * 1024;
+
     private String baseUrl;
 
     public NetworkModule(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    @Provides
+    @Singleton
+    Cache providesOkHttpCache(Application application) {
+        int cacheSize = CACHE_SIZE_10_MB;
+        return new Cache(application.getCacheDir(), cacheSize);
     }
 
     @Provides
@@ -43,9 +55,10 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient(HttpLoggingInterceptor loggin) {
+    OkHttpClient provideOkHttpClient(Cache cache, HttpLoggingInterceptor loggin) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addInterceptor(loggin);
+        client.cache(cache);
         return client.build();
     }
 
