@@ -10,7 +10,6 @@ import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.injection.ApplicationContext;
 import br.com.rafael.pokedexgdgjf.injection.module.ApplicationModule;
 import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
-import br.com.rafael.pokedexgdgjf.injection.module.RxJavaModule;
 import dagger.Component;
 import retrofit2.Retrofit;
 
@@ -20,8 +19,7 @@ import retrofit2.Retrofit;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        NetworkModule.class,
-        RxJavaModule.class
+        NetworkModule.class
 })
 public interface ApplicationComponent {
 
