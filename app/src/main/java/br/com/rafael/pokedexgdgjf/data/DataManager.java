@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import br.com.rafael.pokedexgdgjf.data.local.PokemonDao;
 import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
+import br.com.rafael.pokedexgdgjf.data.operator.WorkerOperatorProvider;
 import br.com.rafael.pokedexgdgjf.data.remote.ApiProvider;
 import rx.Observable;
 
@@ -19,11 +20,13 @@ public class DataManager {
 
     private final ApiProvider mApiProvider;
     private final PokemonDao mPokemonDao;
+    private final WorkerOperatorProvider mWorkerProvider;
 
     @Inject
-    public DataManager(ApiProvider apiProvider, PokemonDao pokemonDao) {
+    public DataManager(ApiProvider apiProvider, PokemonDao pokemonDao, WorkerOperatorProvider workerOperatorProvider) {
         mApiProvider = apiProvider;
         mPokemonDao = pokemonDao;
+        mWorkerProvider = workerOperatorProvider;
     }
 
     public Observable<Pokedex> getPodedex() {
@@ -31,24 +34,29 @@ public class DataManager {
         int pokedexId = 2;
         return mApiProvider
                 .getPokedexService()
-                .getPokedex(pokedexId);
+                .getPokedex(pokedexId)
+                .compose(mWorkerProvider.getWorkerOperatorPokedex());
     }
 
     public Observable<Pokemon> getPokemon(int pokemonId) {
         return mApiProvider
                 .getPokedexService()
-                .getPokemon(pokemonId);
+                .getPokemon(pokemonId)
+                .compose(mWorkerProvider.getWorkerOperatorPokemon());
     }
 
     public Observable<List<Pokemon>> getPokemonsSaved() {
-        return Observable.just(mPokemonDao.getPokemonsSaved());
+        return Observable.just(mPokemonDao.getPokemonsSaved())
+                .compose(mWorkerProvider.getWorkerOperatorListPokemon());
     }
 
     public Observable<Boolean> saveUpdatePokemon(Pokemon pokemon) {
-        return Observable.just(mPokemonDao.saveUpdatePokemon(pokemon));
+        return Observable.just(mPokemonDao.saveUpdatePokemon(pokemon))
+                .compose(mWorkerProvider.getWorkerOperatorBoolean());
     }
 
     public Observable<Boolean> deletePokemon(Pokemon pokemon) {
-        return Observable.just(mPokemonDao.deletePokemon(pokemon));
+        return Observable.just(mPokemonDao.deletePokemon(pokemon))
+                .compose(mWorkerProvider.getWorkerOperatorBoolean());
     }
 }

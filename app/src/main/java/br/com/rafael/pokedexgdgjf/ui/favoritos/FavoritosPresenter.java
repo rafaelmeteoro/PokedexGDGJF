@@ -9,8 +9,6 @@ import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -32,8 +30,6 @@ public class FavoritosPresenter extends BaseRxPresenter<FavoritosContract.View> 
 
         unsubscribe();
         mSubscription = mDataManager.getPokemonsSaved()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<Pokemon>>() {
                     @Override
                     public void onCompleted() {
@@ -64,8 +60,6 @@ public class FavoritosPresenter extends BaseRxPresenter<FavoritosContract.View> 
 
         unsubscribe();
         mSubscription = mDataManager.deletePokemon(pokemon)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {

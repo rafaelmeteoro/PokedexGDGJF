@@ -7,8 +7,6 @@ import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by rafael on 8/29/16.
@@ -29,8 +27,6 @@ public class PokemonPresenter extends BaseRxPresenter<PokemonContract.View> impl
 
         unsubscribe();
         mSubscription = mDataManager.getPokemon(pokemonId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Pokemon>() {
                     @Override
                     public void onCompleted() {
@@ -56,8 +52,6 @@ public class PokemonPresenter extends BaseRxPresenter<PokemonContract.View> impl
 
         unsubscribe();
         mSubscription = mDataManager.saveUpdatePokemon(pokemon)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {

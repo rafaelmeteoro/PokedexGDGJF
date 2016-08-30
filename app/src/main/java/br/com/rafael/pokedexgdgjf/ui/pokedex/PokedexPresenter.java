@@ -6,8 +6,6 @@ import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -29,8 +27,6 @@ public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> impl
 
         unsubscribe();
         mSubscription = mDataManager.getPodedex()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<Pokedex>() {
                     @Override
                     public void onCompleted() {
