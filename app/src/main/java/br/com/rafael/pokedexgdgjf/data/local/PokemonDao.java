@@ -30,7 +30,7 @@ public class PokemonDao {
     public List<Pokemon> getPokemonsSaved() {
         try {
             RealmHelper.instanceRealm();
-            return RealmHelper.findAll(Pokemon.class);
+            return RealmHelper.findAllSortedBy(Pokemon.class, "id");
         } finally {
             RealmHelper.closeRealm();
         }

@@ -23,4 +23,7 @@
     <string name="activity_pokemon_menu_save">Save</string>
     <string name="activity_pokemon_saved">Pokemon salvo</string>
 
+    <!-- Activity Favoritos -->
+    <string name="activity_favorito_deleted">Pokemon deletado</string>
+
 </resources>

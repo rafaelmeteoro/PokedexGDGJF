@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
@@ -52,6 +53,34 @@ public class FavoritosPresenter extends BaseRxPresenter<FavoritosContract.View> 
                             getMvpView().showPokemons(pokemons);
                         } else {
                             getMvpView().showEmpty();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void deletePokemon(Pokemon pokemon) {
+        checkViewAttached();
+
+        unsubscribe();
+        mSubscription = mDataManager.deletePokemon(pokemon)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+                        getFavoritos();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e, "Erro ao deletar pokemon");
+                    }
+
+                    @Override
+                    public void onNext(Boolean value) {
+                        if (value) {
+                            getMvpView().showMessage(R.string.activity_favorito_deleted);
                         }
                     }
                 });

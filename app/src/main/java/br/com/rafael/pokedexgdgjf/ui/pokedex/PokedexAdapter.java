@@ -29,6 +29,10 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<PokemonEntrie> mList;
     private PokedexItemClickListener mListener;
 
+    public interface PokedexItemClickListener {
+        void onPokemonClick(PokemonEntrie pokemonEntrie);
+    }
+
     @Inject
     public PokedexAdapter() {
         mList = Collections.emptyList();
@@ -81,10 +85,6 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setListener(PokedexItemClickListener listener) {
         mListener = listener;
-    }
-
-    public interface PokedexItemClickListener {
-        void onPokemonClick(PokemonEntrie pokemonEntrie);
     }
 
     protected class ItemPokedexViewHolder extends RecyclerView.ViewHolder {

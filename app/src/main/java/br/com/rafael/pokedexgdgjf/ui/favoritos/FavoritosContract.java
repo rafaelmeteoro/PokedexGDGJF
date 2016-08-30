@@ -20,9 +20,13 @@ public interface FavoritosContract {
         void showEmpty();
 
         void showErro();
+
+        void showMessage(int resId);
     }
 
     interface Presenter {
         void getFavoritos();
+
+        void deletePokemon(Pokemon pokemon);
     }
 }

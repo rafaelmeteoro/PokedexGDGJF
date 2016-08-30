@@ -2,10 +2,12 @@ package br.com.rafael.pokedexgdgjf.ui.favoritos;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +27,9 @@ import butterknife.OnClick;
 /**
  * Created by rafael on 8/29/16.
  **/
-public class FavoritosActivity extends BaseMvpActivity implements FavoritosContract.View {
+public class FavoritosActivity extends BaseMvpActivity implements FavoritosContract.View, FavoritosAdapter.FavoritosItemClickListener {
+
+    private static final int NUM_COLUMN = 2;
 
     @Inject
     protected FavoritosPresenter mPresenter;
@@ -65,9 +69,10 @@ public class FavoritosActivity extends BaseMvpActivity implements FavoritosContr
     }
 
     private void setupView() {
+        mAdapter.setListener(this);
         mContentView.setEnabled(false);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, NUM_COLUMN));
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -82,9 +87,25 @@ public class FavoritosActivity extends BaseMvpActivity implements FavoritosContr
         activityComponent.inject(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @OnClick(R.id.error_view)
     public void onReloadClick() {
         mPresenter.getFavoritos();
+    }
+
+    @Override
+    public void onPokemonClick(Pokemon pokemon) {
+        mPresenter.deletePokemon(pokemon);
     }
 
     @Override
@@ -124,5 +145,11 @@ public class FavoritosActivity extends BaseMvpActivity implements FavoritosContr
         mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
         mErrorView.setText(getString(R.string.activity_pokedex_load_list_error));
         mErrorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showMessage(int resId) {
+        Snackbar snackbar = Snackbar.make(mContentView, resId, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }
