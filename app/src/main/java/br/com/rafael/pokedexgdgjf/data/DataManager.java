@@ -27,7 +27,7 @@ public class DataManager {
         mPokemonDao = pokemonDao;
     }
 
-    public Observable<Pokedex> getPodedex() {
+    public Observable<Pokedex> getPokedex() {
         // Neste exemplo pokedex id é fixo
         int pokedexId = 2;
         return mApiProvider

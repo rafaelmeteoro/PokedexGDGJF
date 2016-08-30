@@ -22,8 +22,28 @@ public class Pokedex {
     @SerializedName(POKEMON_ENTRIES)
     private List<PokemonEntrie> pokemonEntries;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<PokemonEntrie> getPokemonEntries() {
         return pokemonEntries;
+    }
+
+    public void setPokemonEntries(List<PokemonEntrie> pokemonEntries) {
+        this.pokemonEntries = pokemonEntries;
     }
 
     public boolean hasPokemons() {

@@ -26,7 +26,7 @@ public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> impl
         showProgress();
 
         unsubscribe();
-        mSubscription = mDataManager.getPodedex()
+        mSubscription = mDataManager.getPokedex()
                 .subscribe(new Subscriber<Pokedex>() {
                     @Override
                     public void onCompleted() {

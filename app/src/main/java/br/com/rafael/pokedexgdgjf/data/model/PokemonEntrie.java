@@ -20,7 +20,15 @@ public class PokemonEntrie {
         return entryNumber;
     }
 
+    public void setEntryNumber(int entryNumber) {
+        this.entryNumber = entryNumber;
+    }
+
     public PokemonSpecies getPokemonSpecies() {
         return pokemonSpecies;
+    }
+
+    public void setPokemonSpecies(PokemonSpecies pokemonSpecies) {
+        this.pokemonSpecies = pokemonSpecies;
     }
 }
