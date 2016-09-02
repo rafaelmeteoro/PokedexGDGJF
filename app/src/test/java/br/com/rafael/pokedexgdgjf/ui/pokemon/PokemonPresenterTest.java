@@ -13,12 +13,9 @@ import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.test.common.TestDataFactory;
 import br.com.rafael.pokedexgdgjf.util.RxSchedulersOverrideRule;
 import rx.Observable;
-import rx.Single;
 
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -75,7 +72,19 @@ public class PokemonPresenterTest {
         verify(mMockView).showError();
     }
 
+    @Test
+    public void savePokemonSuccessful() {
+        stubDataManagerSavePokemon(Observable.just(true));
+
+        mPresenter.savePokmon((Pokemon) anyObject());
+        verify(mMockView).showMessage(anyInt());
+    }
+
     private void stubDataManagerGetPokemon(Observable<Pokemon> observable) {
         when(mMockDataManager.getPokemon(anyInt())).thenReturn(observable);
+    }
+
+    private void stubDataManagerSavePokemon(Observable<Boolean> observable) {
+        when(mMockDataManager.saveUpdatePokemon((Pokemon) anyObject())).thenReturn(observable);
     }
 }

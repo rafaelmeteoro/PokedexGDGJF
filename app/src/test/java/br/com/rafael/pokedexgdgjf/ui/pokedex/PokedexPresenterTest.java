@@ -6,7 +6,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import br.com.rafael.pokedexgdgjf.data.DataManager;
@@ -15,9 +14,6 @@ import br.com.rafael.pokedexgdgjf.test.common.TestDataFactory;
 import br.com.rafael.pokedexgdgjf.util.RxSchedulersOverrideRule;
 import rx.Observable;
 
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
