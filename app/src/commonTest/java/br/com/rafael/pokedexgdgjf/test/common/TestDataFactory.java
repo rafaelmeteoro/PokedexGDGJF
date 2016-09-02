@@ -55,6 +55,14 @@ public class TestDataFactory {
         return pokedex;
     }
 
+    public static Pokedex newPokedexPokemonEntriesEmpty() {
+        Pokedex pokedex = new Pokedex();
+        pokedex.setId(randomInt());
+        pokedex.setName(randomString());
+        pokedex.setPokemonEntries(new ArrayList<PokemonEntrie>());
+        return pokedex;
+    }
+
     public static Sprites newSprites() {
         Sprites sprites = new Sprites();
         sprites.setBackDefault(randomString());
