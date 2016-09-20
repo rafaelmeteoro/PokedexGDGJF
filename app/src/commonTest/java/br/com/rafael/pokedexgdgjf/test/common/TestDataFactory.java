@@ -51,7 +51,7 @@ public class TestDataFactory {
         Pokedex pokedex = new Pokedex();
         pokedex.setId(randomInt());
         pokedex.setName(randomString());
-        pokedex.setPokemonEntries(newPokemonEntrieList(10));
+        pokedex.setPokemonEntries(newPokemonEntrieList(20));
         return pokedex;
     }
 
