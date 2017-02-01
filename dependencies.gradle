@@ -1,0 +1,38 @@
+def GRADLE_VERSION = '2.2.1'
+
+// Android
+def SUPPORT_LIBRARY_VERSION = '24.2.1'
+
+def RX_JAVA_VERSION = '1.2.3'
+def RX_ANDROID_VERSION = '1.2.1'
+def RX_MATH_VERSION = '1.0.0'
+def RX_LIFECYCLE_VERSION = '0.6.1'
+
+def RETROFIT2_VERSION = '2.1.0'
+def LOG_INTERCEPTOR_VERSION = '3.3.1'
+def DIGEST_VERSION = '1.5'
+
+def BUTTERKNIFE_VERSION = '8.4.0'
+def DAGGER_VERSION = '2.4'
+
+def LEAK_CANARY_VERSION = '1.5'
+
+def PICASSO_VERSION = '2.5.2'
+
+// Test
+def MOCKITO_VERSION = '1.10.19'
+def ESPRESSO_VERSION = '2.2.2'
+def RUNNER_VERSION = '0.5'
+def JUNIT_VERSION = '4.12'
+def JAVAX_INJECT_VERSION = '1'
+
+ext.deps = [
+        gradle : "com.android.tools.build:gradle:$GRADLE_VERSION",
+
+        // Support Libraries
+        appCompat           : "com.android.support.appCompat-v7:$SUPPORT_LIBRARY_VERSION",
+        supportV4           : "com.android.support.support-v4:$SUPPORT_LIBRARY_VERSION",
+        designCompat        : "com.android.support.design:$SUPPORT_LIBRARY_VERSION",
+        cardViewCompat      : "com.android.support.cardview-v7:$SUPPORT_LIBRARY_VERSION",
+        supportAnnotations  : "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
+]
