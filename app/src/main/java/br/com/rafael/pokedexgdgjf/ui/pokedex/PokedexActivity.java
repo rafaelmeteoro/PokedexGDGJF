@@ -24,7 +24,7 @@ import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
 import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
 import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,19 +39,19 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     @Inject
     protected PokedexAdapter mAdapter;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
 
-    @Bind(R.id.content_view)
+    @BindView(R.id.content_view)
     protected SwipeRefreshLayout mContentView;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     protected RecyclerView mRecyclerView;
 
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     protected ProgressBar mLoadingView;
 
-    @Bind(R.id.error_view)
+    @BindView(R.id.error_view)
     protected TextView mErrorView;
 
     @Override

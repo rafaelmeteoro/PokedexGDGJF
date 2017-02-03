@@ -17,7 +17,7 @@ import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -89,13 +89,13 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     protected class ItemPokedexViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.ll_item)
+        @BindView(R.id.ll_item)
         LinearLayout llItem;
 
-        @Bind(R.id.pokemon_name)
+        @BindView(R.id.pokemon_name)
         TextView pokemonName;
 
-        @Bind(R.id.iv_pokemon)
+        @BindView(R.id.iv_pokemon)
         CircleImageView ivPokemon;
 
         public ItemPokedexViewHolder(View view) {

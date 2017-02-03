@@ -17,7 +17,8 @@ import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -90,19 +91,19 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     protected class ItemFavoritosViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.iv_pokemon)
+        @BindView(R.id.iv_pokemon)
         CircleImageView ivPokemon;
 
-        @Bind(R.id.pokemon_name)
+        @BindView(R.id.pokemon_name)
         TextView pokemonName;
 
-        @Bind(R.id.pokemon_weight)
+        @BindView(R.id.pokemon_weight)
         TextView pokemonWeight;
 
-        @Bind(R.id.pokemon_height)
+        @BindView(R.id.pokemon_height)
         TextView pokemonHeight;
 
-        @Bind(R.id.ib_delete)
+        @BindView(R.id.ib_delete)
         ImageButton ibDelete;
 
         public ItemFavoritosViewHolder(View view) {
