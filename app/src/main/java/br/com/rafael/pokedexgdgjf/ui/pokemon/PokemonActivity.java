@@ -22,7 +22,7 @@ import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,28 +38,28 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
     @Inject
     protected PokemonPresenter mPresenter;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
 
-    @Bind(R.id.content_view)
+    @BindView(R.id.content_view)
     protected ScrollView mContentView;
 
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     protected ProgressBar mLoadingView;
 
-    @Bind(R.id.error_view)
+    @BindView(R.id.error_view)
     protected TextView mErrorView;
 
-    @Bind(R.id.iv_pokemon)
+    @BindView(R.id.iv_pokemon)
     protected CircleImageView pokemonImage;
 
-    @Bind(R.id.pokemon_name)
+    @BindView(R.id.pokemon_name)
     protected TextView pokemonName;
 
-    @Bind(R.id.pokemon_weight)
+    @BindView(R.id.pokemon_weight)
     protected TextView pokemonWeight;
 
-    @Bind(R.id.pokemon_height)
+    @BindView(R.id.pokemon_height)
     protected TextView pokemonHeight;
 
     private int mPokemonId;
