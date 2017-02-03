@@ -23,6 +23,7 @@ def TIMBER_VERSION = '4.1.2'
 def CIRCLE_IMAGE_VIEW_VERSION = '2.1.0'
 
 def PICASSO_VERSION = '2.5.2'
+def POLLEXOR_VERSION = '2.0.4'
 
 // Test
 def MOCKITO_VERSION = '1.10.19'
@@ -35,11 +36,11 @@ ext.deps = [
         gradle : "com.android.tools.build:gradle:$GRADLE_VERSION",
 
         // Support Libraries
-        appCompat           : "com.android.support.appCompat-v7:$SUPPORT_LIBRARY_VERSION",
-        supportV4           : "com.android.support.support-v4:$SUPPORT_LIBRARY_VERSION",
-        designCompat        : "com.android.support.design:$SUPPORT_LIBRARY_VERSION",
+        appCompat           : "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION",
+        supportV4           : "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION",
+        designCompat        : "com.android.support:design:$SUPPORT_LIBRARY_VERSION",
         recyclerViewCompat  : "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION",
-        cardViewCompat      : "com.android.support.cardview-v7:$SUPPORT_LIBRARY_VERSION",
+        cardViewCompat      : "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION",
         supportAnnotations  : "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION",
 
         // Rx Libraries

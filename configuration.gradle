@@ -13,6 +13,7 @@ ext.sdk = [
         targetCompatibilityVersion  : JAVA_VERSION
 ]
 
+/*
 android {
 
     compileSdkVersion sdk.compileSdkVersion
@@ -29,4 +30,4 @@ android {
         sourceCompatibility sdk.sourceCompatibilityVersion
         targetCompatibility sdk.targetCompatibilityVersion
     }
-}
+}*/
