@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import br.com.rafael.pokedexgdgjf.data.local.RealmHelper;
 import br.com.rafael.pokedexgdgjf.injection.component.ApplicationComponent;
 import br.com.rafael.pokedexgdgjf.injection.component.DaggerApplicationComponent;
@@ -24,9 +26,20 @@ public class PokedexApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysys.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
+        initTimber();
         initRealm();
         initDagger();
+    }
+
+    private void initTimber() {
+        if (BuildConfig.DEBUG) Timber.plant(new Timber.DebugTree());
     }
 
     private void initRealm() {
