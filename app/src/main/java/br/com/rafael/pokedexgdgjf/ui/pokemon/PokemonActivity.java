@@ -95,7 +95,7 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
 
     @Override
     protected void inject(ActivityComponent activityComponent) {
-        activityComponent.inject(this);
+        //activityComponent.inject(this);
     }
 
     @Override

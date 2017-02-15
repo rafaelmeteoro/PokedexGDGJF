@@ -20,7 +20,6 @@ import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
 import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -85,7 +84,7 @@ public class FavoritosActivity extends BaseMvpActivity implements FavoritosContr
 
     @Override
     protected void inject(ActivityComponent activityComponent) {
-        activityComponent.inject(this);
+        //activityComponent.inject(this);
     }
 
     @Override

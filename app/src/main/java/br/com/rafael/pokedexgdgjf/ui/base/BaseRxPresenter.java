@@ -5,7 +5,7 @@ import rx.Subscription;
 /**
  * Created by rafael on 8/25/16.
  **/
-public abstract class BaseRxPresenter<T extends MvpView> implements Presenter<T> {
+public abstract class BaseRxPresenter<T extends MvpView> implements MvpPresenter<T> {
 
     private T mMvpView;
 
@@ -43,7 +43,7 @@ public abstract class BaseRxPresenter<T extends MvpView> implements Presenter<T>
 
     public static class MvpViewNotAttachedException extends RuntimeException {
         public MvpViewNotAttachedException() {
-            super("Chame Presenter.attachView(MvpView) antes de interagir com o Presenter");
+            super("Chame MvpPresenter.attachView(MvpView) antes de interagir com o MvpPresenter");
         }
     }
 }

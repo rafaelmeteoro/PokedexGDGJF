@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import br.com.rafael.pokedexgdgjf.PokedexApplication;
 import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
-import br.com.rafael.pokedexgdgjf.injection.component.DaggerActivityComponent;
-import br.com.rafael.pokedexgdgjf.injection.module.ActivityModule;
 
 /**
  * Created by rafael on 8/25/16.
@@ -23,13 +20,13 @@ public abstract class BaseMvpActivity extends AppCompatActivity {
     }
 
     private void injectDependencies() {
-        if (mActivityComponent == null) {
+        /*if (mActivityComponent == null) {
             mActivityComponent = DaggerActivityComponent.builder()
                     .activityModule(new ActivityModule(this))
                     .applicationComponent(PokedexApplication.get(this).getComponent())
                     .build();
         }
-        inject(mActivityComponent);
+        inject(mActivityComponent);*/
     }
 
     protected abstract void inject(ActivityComponent activityComponent);

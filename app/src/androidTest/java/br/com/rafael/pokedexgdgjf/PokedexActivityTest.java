@@ -1,7 +1,6 @@
 package br.com.rafael.pokedexgdgjf;
 
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -98,9 +97,9 @@ public class PokedexActivityTest {
     }
 
     private void checkPokemonItemViewsDisplayed(PokemonEntrie pokemonEntrie, int position) {
-        onView(withId(R.id.recycler_view))
+        /*onView(withId(R.id.recycler_view))
                 .perform(RecyclerViewActions.scrollToPosition(position));
         onView(withText(pokemonEntrie.getPokemonSpecies().getName()))
-                .check(matches(isDisplayed()));
+                .check(matches(isDisplayed()));*/
     }
 }

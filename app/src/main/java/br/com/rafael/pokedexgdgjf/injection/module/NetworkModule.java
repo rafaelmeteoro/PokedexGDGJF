@@ -1,6 +1,6 @@
 package br.com.rafael.pokedexgdgjf.injection.module;
 
-import android.app.Application;
+import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import javax.inject.Singleton;
 
 import br.com.rafael.pokedexgdgjf.BuildConfig;
+import br.com.rafael.pokedexgdgjf.data.remote.ApiProvider;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -33,9 +34,9 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Cache providesOkHttpCache(Application application) {
+    Cache providesOkHttpCache(Context context) {
         int cacheSize = CACHE_SIZE_10_MB;
-        return new Cache(application.getCacheDir(), cacheSize);
+        return new Cache(context.getCacheDir(), cacheSize);
     }
 
     @Provides
@@ -71,5 +72,11 @@ public class NetworkModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    ApiProvider provideApiProvider(Retrofit retrofit) {
+        return new ApiProvider(retrofit);
     }
 }

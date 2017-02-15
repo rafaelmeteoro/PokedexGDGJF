@@ -19,9 +19,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
+import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
-import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
+import br.com.rafael.pokedexgdgjf.injection.HasComponent;
+import br.com.rafael.pokedexgdgjf.ui.base.BaseActivity;
+import br.com.rafael.pokedexgdgjf.ui.di.component.DaggerPokedexComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.component.PokedexComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.module.PokedexModule;
 import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
 import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import butterknife.BindView;
@@ -31,7 +35,9 @@ import butterknife.OnClick;
 /**
  * Created by rafael on 8/28/16.
  **/
-public class PokedexActivity extends BaseMvpActivity implements PokedexContract.View, PokedexAdapter.PokedexItemClickListener {
+public class PokedexActivity extends BaseActivity
+        implements PokedexContract.View, PokedexAdapter.PokedexItemClickListener,
+        HasComponent<PokedexComponent>{
 
     @Inject
     protected PokedexPresenter mPresenter;
@@ -54,20 +60,37 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     @BindView(R.id.error_view)
     protected TextView mErrorView;
 
+    PokedexComponent mComponent;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedex);
         ButterKnife.bind(this);
-        mPresenter.attachView(this);
 
-        setSupportActionBar(mToolbar);
-        setupViews();
-
-        mPresenter.getPokedex();
+        initializeToolBar();
+        initializeInjection();
+        initialize();
+        initializePresenter();
+        initializeContents();
     }
 
-    private void setupViews() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializePresenter();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+    }
+
+    private void initialize() {
         mAdapter.setListener(this);
         mContentView.setEnabled(false);
 
@@ -75,15 +98,32 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        super.onDestroy();
+    private void initializeToolBar() {
+        setSupportActionBar(mToolbar);
+    }
+
+    private void initializeInjection() {
+        mComponent = DaggerPokedexComponent.builder()
+                .libraryComponent(((PokedexApplication) getApplication()).getComponent())
+                .activityModule(getActivityModule())
+                .pokedexModule(new PokedexModule())
+                .build();
+        mComponent.inject(this);
+    }
+
+    private void initializePresenter() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    private void initializeContents() {
+        mPresenter.getPokedex();
     }
 
     @Override
-    protected void inject(ActivityComponent activityComponent) {
-        activityComponent.inject(this);
+    public PokedexComponent getComponent() {
+        return mComponent;
     }
 
     @Override

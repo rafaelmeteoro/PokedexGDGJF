@@ -2,64 +2,54 @@ package br.com.rafael.pokedexgdgjf.ui.pokedex;
 
 import javax.inject.Inject;
 
-import br.com.rafael.pokedexgdgjf.data.DataManager;
-import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
-import rx.Subscriber;
+import br.com.rafael.pokedexgdgjf.ui.base.BasePresenter;
+import br.com.rafael.pokedexgdgjf.ui.iteractor.GetPokedex;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
  * Created by rafael on 8/28/16.
  **/
-public class PokedexPresenter extends BaseRxPresenter<PokedexContract.View> implements PokedexContract.Presenter {
+public class PokedexPresenter extends BasePresenter<PokedexContract.View>
+        implements PokedexContract.Presenter {
 
-    protected DataManager mDataManager;
+    private GetPokedex mGetPokedex;
+
+    private CompositeSubscription mSubscriptions;
 
     @Inject
-    public PokedexPresenter(DataManager dataManager) {
-        mDataManager = dataManager;
+    public PokedexPresenter(GetPokedex getPokedex) {
+        mGetPokedex = getPokedex;
+
+        mSubscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    protected void clean() {
+        mSubscriptions.clear();
     }
 
     @Override
     public void getPokedex() {
-        checkViewAttached();
-        showProgress();
+        PokedexContract.View view = getView();
+        view.showProgress();
 
-        unsubscribe();
-        mSubscription = mDataManager.getPokedex()
-                .subscribe(new Subscriber<Pokedex>() {
-                    @Override
-                    public void onCompleted() {
-                        hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "Erro ao carregar pokedex");
-                        hideProgress();
-                        showError();
-                    }
-
-                    @Override
-                    public void onNext(Pokedex pokedex) {
-                        if (pokedex != null && pokedex.hasPokemons()) {
-                            getMvpView().showPokemonEntries(pokedex.getPokemonEntries());
-                        } else {
-                            getMvpView().showEmpty();
-                        }
-                    }
-                });
-    }
-
-    private void showProgress() {
-        getMvpView().showProgress();
-    }
-
-    private void hideProgress() {
-        getMvpView().hideProgress();
-    }
-
-    private void showError() {
-        getMvpView().showError();
+        mSubscriptions.add(
+                mGetPokedex.execute()
+                        .subscribe(
+                                pokedex -> {
+                                    if (pokedex != null && pokedex.hasPokemons()) {
+                                        view.showPokemonEntries(pokedex.getPokemonEntries());
+                                    } else {
+                                        view.showEmpty();
+                                    }
+                                    view.hideProgress();
+                                }, error -> {
+                                    Timber.e(error, "Erro ao carregar pokedex");
+                                    view.hideProgress();
+                                    view.showError();
+                                }
+                        )
+        );
     }
 }

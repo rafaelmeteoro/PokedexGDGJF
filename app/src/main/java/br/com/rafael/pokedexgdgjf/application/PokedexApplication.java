@@ -1,15 +1,15 @@
-package br.com.rafael.pokedexgdgjf;
+package br.com.rafael.pokedexgdgjf.application;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.VisibleForTesting;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import br.com.rafael.pokedexgdgjf.BuildConfig;
 import br.com.rafael.pokedexgdgjf.data.local.RealmHelper;
-import br.com.rafael.pokedexgdgjf.injection.component.ApplicationComponent;
-import br.com.rafael.pokedexgdgjf.injection.component.DaggerApplicationComponent;
-import br.com.rafael.pokedexgdgjf.injection.module.ApplicationModule;
+import br.com.rafael.pokedexgdgjf.injection.component.DaggerLibraryComponent;
+import br.com.rafael.pokedexgdgjf.injection.component.LibraryComponent;
+import br.com.rafael.pokedexgdgjf.injection.module.LibraryModule;
 import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -20,7 +20,7 @@ import timber.log.Timber;
  **/
 public class PokedexApplication extends Application {
 
-    protected ApplicationComponent mApplicationComponent;
+    private LibraryComponent mComponent;
 
     @Override
     public void onCreate() {
@@ -51,25 +51,17 @@ public class PokedexApplication extends Application {
     }
 
     private void initDagger() {
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+        mComponent = DaggerLibraryComponent.builder()
+                .libraryModule(new LibraryModule(getApplicationContext()))
                 .networkModule(new NetworkModule(BuildConfig.API_URL))
                 .build();
+    }
 
-        mApplicationComponent.inject(this);
+    public LibraryComponent getComponent() {
+        return mComponent;
     }
 
     public static PokedexApplication get(Context context) {
         return (PokedexApplication) context.getApplicationContext();
-    }
-
-    public ApplicationComponent getComponent() {
-        return mApplicationComponent;
-    }
-
-    // Needed to replace the component with a test specific one
-    @VisibleForTesting
-    public void setComponent(ApplicationComponent applicationComponent) {
-        mApplicationComponent = applicationComponent;
     }
 }
