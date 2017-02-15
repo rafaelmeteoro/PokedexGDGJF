@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
+import br.com.rafael.pokedexgdgjf.ui.listener.OnPokemonClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -27,11 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private List<PokemonEntrie> mList;
-    private PokedexItemClickListener mListener;
-
-    public interface PokedexItemClickListener {
-        void onPokemonClick(PokemonEntrie pokemonEntrie);
-    }
+    private OnPokemonClickListener mListener;
 
     @Inject
     public PokedexAdapter() {
@@ -83,7 +80,7 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mList = list;
     }
 
-    public void setListener(PokedexItemClickListener listener) {
+    public void setListener(OnPokemonClickListener listener) {
         mListener = listener;
     }
 

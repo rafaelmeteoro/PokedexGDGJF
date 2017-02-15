@@ -27,6 +27,7 @@ import br.com.rafael.pokedexgdgjf.ui.di.component.DaggerPokedexComponent;
 import br.com.rafael.pokedexgdgjf.ui.di.component.PokedexComponent;
 import br.com.rafael.pokedexgdgjf.ui.di.module.PokedexModule;
 import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
+import br.com.rafael.pokedexgdgjf.ui.listener.OnPokemonClickListener;
 import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +37,7 @@ import butterknife.OnClick;
  * Created by rafael on 8/28/16.
  **/
 public class PokedexActivity extends BaseActivity
-        implements PokedexContract.View, PokedexAdapter.PokedexItemClickListener,
-        HasComponent<PokedexComponent>{
+        implements PokedexContract.View, HasComponent<PokedexComponent> {
 
     @Inject
     protected PokedexPresenter mPresenter;
@@ -61,6 +61,10 @@ public class PokedexActivity extends BaseActivity
     protected TextView mErrorView;
 
     PokedexComponent mComponent;
+
+    private final OnPokemonClickListener mOnPokemonClickListener =
+            pokemonEntrie ->
+                    startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +95,7 @@ public class PokedexActivity extends BaseActivity
     }
 
     private void initialize() {
-        mAdapter.setListener(this);
+        mAdapter.setListener(mOnPokemonClickListener);
         mContentView.setEnabled(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -147,11 +151,6 @@ public class PokedexActivity extends BaseActivity
     @OnClick(R.id.error_view)
     public void onReloadClick() {
         mPresenter.getPokedex();
-    }
-
-    @Override
-    public void onPokemonClick(PokemonEntrie pokemonEntrie) {
-        startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
     }
 
     @Override
