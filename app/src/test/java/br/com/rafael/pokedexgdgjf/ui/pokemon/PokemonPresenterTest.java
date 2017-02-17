@@ -38,7 +38,7 @@ public class PokemonPresenterTest {
 
     @Before
     public void setup() {
-        mPresenter = new PokemonPresenter(mMockDataManager);
+        //mPresenter = new PokemonPresenter(mMockDataManager);
         mPresenter.attachView(mMockView);
     }
 

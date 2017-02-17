@@ -1,6 +1,7 @@
 package br.com.rafael.pokedexgdgjf.ui.pokemon;
 
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
+import br.com.rafael.pokedexgdgjf.ui.base.MvpPresenter;
 import br.com.rafael.pokedexgdgjf.ui.base.MvpView;
 
 /**
@@ -25,10 +26,10 @@ public interface PokemonContract {
 
         void showPokemonHeight(int height);
 
-        void showMessage(int resId);
+        void showMessage();
     }
 
-    interface Presenter {
+    interface Presenter extends MvpPresenter<View> {
         void getPokemon(int pokemonId);
 
         void savePokmon(Pokemon pokemon);

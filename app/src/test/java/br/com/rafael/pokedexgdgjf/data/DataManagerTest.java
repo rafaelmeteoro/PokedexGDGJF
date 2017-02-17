@@ -41,8 +41,8 @@ public class DataManagerTest {
     @Mock
     PokedexService mMockPokedexService;
 
-    @InjectMocks
-    ApiProvider mMockApiProvider = spy(new ApiProvider(mockRetrofit()));
+    /*@InjectMocks
+    ApiProvider mMockApiProvider = spy(new ApiProvider(mockRetrofit()));*/
 
     DataManager mDataManager;
 
@@ -58,10 +58,10 @@ public class DataManagerTest {
                 .build();
     }
 
-    @Before
+    /*@Before
     public void setup() {
         mDataManager = new DataManager(mMockApiProvider, mMockPokemonDao);
-    }
+    }*/
 
     @Test
     public void getPokedexComplete() {
@@ -139,12 +139,12 @@ public class DataManagerTest {
     }
 
     private void stubPokedexServiceGetPokedex(Observable<Pokedex> observable) {
-        when(mMockApiProvider.getPokedexService()).thenReturn(mMockPokedexService);
+        //when(mMockApiProvider.getPokedexService()).thenReturn(mMockPokedexService);
         when(mMockPokedexService.getPokedex(anyInt())).thenReturn(observable);
     }
 
     private void stubPokedexServiceGetPokemon(Observable<Pokemon> observable) {
-        when(mMockApiProvider.getPokedexService()).thenReturn(mMockPokedexService);
+        //when(mMockApiProvider.getPokedexService()).thenReturn(mMockPokedexService);
         when(mMockPokedexService.getPokemon(anyInt())).thenReturn(observable);
     }
 

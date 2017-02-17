@@ -41,7 +41,7 @@ public class PokedexActivity extends BaseActivity
         implements PokedexContract.View, HasComponent<PokedexComponent> {
 
     @Inject
-    protected PokedexPresenter mPresenter;
+    protected PokedexContract.Presenter mPresenter;
 
     @Inject
     protected PokedexAdapter mAdapter;
@@ -89,7 +89,6 @@ public class PokedexActivity extends BaseActivity
     @Override
     protected void onStop() {
         super.onStop();
-
         if (mPresenter != null) {
             mPresenter.detachView();
         }
