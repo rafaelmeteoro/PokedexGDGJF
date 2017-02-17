@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by rafael on 8/28/16.
  **/
-public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<PokemonEntrie> mList;
     private OnPokemonClickListener mListener;
@@ -37,10 +37,9 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_pokedex, parent, false);
-        ItemPokedexViewHolder holder = new ItemPokedexViewHolder(view);
-        holder.llItem.setOnClickListener(this);
-        return holder;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_item_pokedex, parent, false);
+        return new ItemPokedexViewHolder(view);
     }
 
     @Override
@@ -60,20 +59,17 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .placeholder(R.drawable.pokeball)
                 .error(R.drawable.cloud_outline_off)
                 .into(holder.ivPokemon);
+
+        holder.llItem.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onPokemonClick(pokemonEntrie);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
-    }
-
-    @Override
-    public void onClick(View view) {
-        int itemId = view.getId();
-        if (itemId == R.id.ll_item && mListener != null) {
-            ItemPokedexViewHolder holder = (ItemPokedexViewHolder) view.getTag();
-            mListener.onPokemonClick(mList.get(holder.getAdapterPosition()));
-        }
     }
 
     public void setList(List<PokemonEntrie> list) {
