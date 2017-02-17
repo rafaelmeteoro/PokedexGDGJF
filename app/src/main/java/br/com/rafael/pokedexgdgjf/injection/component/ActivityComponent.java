@@ -1,15 +1,11 @@
 package br.com.rafael.pokedexgdgjf.injection.component;
 
-import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
-import br.com.rafael.pokedexgdgjf.injection.ActivityContext;
 import br.com.rafael.pokedexgdgjf.injection.PerActivity;
 import br.com.rafael.pokedexgdgjf.injection.module.ActivityModule;
-import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
-import br.com.rafael.pokedexgdgjf.ui.pokedex.PokedexActivity;
-import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import dagger.Component;
-import retrofit2.Retrofit;
 
 /**
  * Created by rafael on 8/25/16.
@@ -18,14 +14,7 @@ import retrofit2.Retrofit;
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 
-    void inject(PokedexActivity pokedexActivity);
+    AppCompatActivity activity();
 
-    void inject(PokemonActivity pokemonActivity);
-
-    void inject(FavoritosActivity favoritosActivity);
-
-    Retrofit retrofit();
-
-    @ActivityContext
-    Context context();
+    FragmentManager fragmentManager();
 }

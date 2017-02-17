@@ -5,7 +5,6 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.remote.ApiProvider;
 import br.com.rafael.pokedexgdgjf.injection.ApplicationContext;
 import dagger.Module;
@@ -37,12 +36,6 @@ public class ApplicationTestModule {
     }
 
     /****** MOCKS ******/
-
-    @Provides
-    @Singleton
-    DataManager provideDataManager() {
-        return mock(DataManager.class);
-    }
 
     @Provides
     @Singleton

@@ -1,6 +1,6 @@
 package br.com.rafael.pokedexgdgjf.data.remote;
 
-import android.app.Application;
+import android.content.Context;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,15 +14,15 @@ import retrofit2.Retrofit;
 public class ApiProvider {
 
     private final Retrofit mRetrofit;
-    private final Application mApplication;
+    private final Context mContext;
 
     @Inject
-    public ApiProvider(Retrofit retrofit, Application application) {
+    public ApiProvider(Retrofit retrofit, Context context) {
         mRetrofit = retrofit;
-        mApplication = application;
+        mContext = context;
     }
 
     public PokedexService getPokedexService() {
-        return new MockPokedexService(mApplication.getApplicationContext());
+        return new MockPokedexService(mContext);
     }
 }

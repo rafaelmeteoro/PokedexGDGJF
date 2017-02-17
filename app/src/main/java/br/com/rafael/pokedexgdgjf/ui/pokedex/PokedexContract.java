@@ -3,6 +3,7 @@ package br.com.rafael.pokedexgdgjf.ui.pokedex;
 import java.util.List;
 
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
+import br.com.rafael.pokedexgdgjf.ui.base.MvpPresenter;
 import br.com.rafael.pokedexgdgjf.ui.base.MvpView;
 
 /**
@@ -22,7 +23,7 @@ public interface PokedexContract {
         void showError();
     }
 
-    interface Presenter {
+    interface Presenter extends MvpPresenter<View> {
         void getPokedex();
     }
 }

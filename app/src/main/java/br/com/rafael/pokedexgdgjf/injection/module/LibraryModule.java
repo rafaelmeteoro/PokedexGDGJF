@@ -12,17 +12,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by rafael on 8/25/16.
+ * Created by rafael on 2/15/17.
  **/
-@Module
-public class ApplicationModule {
 
-    public static final String MAIN_THREAD = "mainThreadScheduler";
-    public static final String JOB_THREAD = "jobScheduler";
+@Module
+public class LibraryModule {
 
     private final Context mApplicationContext;
 
-    public ApplicationModule(Context applicationContext) {
+    public LibraryModule(Context applicationContext) {
         mApplicationContext = applicationContext.getApplicationContext();
     }
 
@@ -34,15 +32,15 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    @Named(MAIN_THREAD)
+    @Named(ApplicationModule.MAIN_THREAD)
     Scheduler provideMainThreadScheduler() {
         return AndroidSchedulers.mainThread();
     }
 
     @Provides
     @Singleton
-    @Named(JOB_THREAD)
+    @Named(ApplicationModule.JOB_THREAD)
     Scheduler provideJobScheduler() {
-        return Schedulers.io();
+        return Schedulers.computation();
     }
 }

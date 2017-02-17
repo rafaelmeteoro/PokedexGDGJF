@@ -6,13 +6,8 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import br.com.rafael.pokedexgdgjf.BuildConfig;
-import br.com.rafael.pokedexgdgjf.PokedexApplication;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
-import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
-import br.com.rafael.pokedexgdgjf.test.common.injection.component.DaggerTestComponent;
+import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
 import br.com.rafael.pokedexgdgjf.test.common.injection.component.TestComponent;
-import br.com.rafael.pokedexgdgjf.test.common.injection.module.ApplicationTestModule;
 
 /**
  * Created by rafael on 8/29/16.
@@ -30,17 +25,13 @@ public class TestComponentRule implements TestRule {
         return mContext;
     }
 
-    public DataManager getMockDataManager() {
-        return mTestComponent.dataManager();
-    }
-
     public void setupDaggerTestComponentInApplication() {
         PokedexApplication application = PokedexApplication.get(mContext);
-        mTestComponent = DaggerTestComponent.builder()
+        /*mTestComponent = DaggerTestComponent.builder()
                 .applicationTestModule(new ApplicationTestModule(application))
                 .networkModule(new NetworkModule(BuildConfig.API_URL))
                 .build();
-        application.setComponent(mTestComponent);
+        application.setComponent(mTestComponent);*/
     }
 
     @Override

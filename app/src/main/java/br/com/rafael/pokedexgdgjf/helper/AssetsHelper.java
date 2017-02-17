@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import br.com.rafael.pokedexgdgjf.PokedexApplication;
+import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
 
 /**
  * Classe responsável por pegar um arquivo json local, ler e devolve-lo em string

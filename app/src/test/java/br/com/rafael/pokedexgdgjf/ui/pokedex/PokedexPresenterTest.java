@@ -8,14 +8,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
 import br.com.rafael.pokedexgdgjf.test.common.TestDataFactory;
 import br.com.rafael.pokedexgdgjf.util.RxSchedulersOverrideRule;
 import rx.Observable;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by rafael on 9/2/16.
@@ -26,9 +24,6 @@ public class PokedexPresenterTest {
     @Mock
     PokedexContract.View mMockView;
 
-    @Mock
-    DataManager mMockDataManager;
-
     private PokedexPresenter mPresenter;
 
     @Rule
@@ -36,8 +31,8 @@ public class PokedexPresenterTest {
 
     @Before
     public void setup() {
-        mPresenter = new PokedexPresenter(mMockDataManager);
-        mPresenter.attachView(mMockView);
+        /*mPresenter = new PokedexPresenter(mMockDataManager);
+        mPresenter.attachView(mMockView);*/
     }
 
     @After
@@ -77,6 +72,6 @@ public class PokedexPresenterTest {
     }
 
     private void stubDataManagerGetPokedex(Observable<Pokedex> observable) {
-        when(mMockDataManager.getPokedex()).thenReturn(observable);
+        //when(mMockDataManager.getPokedex()).thenReturn(observable);
     }
 }

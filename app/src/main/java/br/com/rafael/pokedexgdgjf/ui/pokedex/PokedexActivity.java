@@ -19,10 +19,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
+import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
 import br.com.rafael.pokedexgdgjf.data.model.PokemonEntrie;
-import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
+import br.com.rafael.pokedexgdgjf.injection.HasComponent;
+import br.com.rafael.pokedexgdgjf.ui.base.BaseActivity;
+import br.com.rafael.pokedexgdgjf.ui.di.component.DaggerPokedexComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.component.PokedexComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.module.PokedexModule;
 import br.com.rafael.pokedexgdgjf.ui.favoritos.FavoritosActivity;
+import br.com.rafael.pokedexgdgjf.ui.listener.OnPokemonClickListener;
 import br.com.rafael.pokedexgdgjf.ui.pokemon.PokemonActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,10 +36,11 @@ import butterknife.OnClick;
 /**
  * Created by rafael on 8/28/16.
  **/
-public class PokedexActivity extends BaseMvpActivity implements PokedexContract.View, PokedexAdapter.PokedexItemClickListener {
+public class PokedexActivity extends BaseActivity
+        implements PokedexContract.View, HasComponent<PokedexComponent> {
 
     @Inject
-    protected PokedexPresenter mPresenter;
+    protected PokedexContract.Presenter mPresenter;
 
     @Inject
     protected PokedexAdapter mAdapter;
@@ -54,36 +60,73 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     @BindView(R.id.error_view)
     protected TextView mErrorView;
 
+    PokedexComponent mComponent;
+
+    private final OnPokemonClickListener mOnPokemonClickListener =
+            pokemonEntrie ->
+                    startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokedex);
         ButterKnife.bind(this);
-        mPresenter.attachView(this);
 
-        setSupportActionBar(mToolbar);
-        setupViews();
-
-        mPresenter.getPokedex();
+        initializeToolBar();
+        initializeInjection();
+        initialize();
+        initializePresenter();
+        initializeContents();
     }
 
-    private void setupViews() {
-        mAdapter.setListener(this);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializePresenter();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+    }
+
+    private void initialize() {
+        mAdapter.setListener(mOnPokemonClickListener);
         mContentView.setEnabled(false);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        super.onDestroy();
+    private void initializeToolBar() {
+        setSupportActionBar(mToolbar);
+    }
+
+    private void initializeInjection() {
+        mComponent = DaggerPokedexComponent.builder()
+                .libraryComponent(((PokedexApplication) getApplication()).getComponent())
+                .activityModule(getActivityModule())
+                .pokedexModule(new PokedexModule())
+                .build();
+        mComponent.inject(this);
+    }
+
+    private void initializePresenter() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    private void initializeContents() {
+        mPresenter.getPokedex();
     }
 
     @Override
-    protected void inject(ActivityComponent activityComponent) {
-        activityComponent.inject(this);
+    public PokedexComponent getComponent() {
+        return mComponent;
     }
 
     @Override
@@ -107,11 +150,6 @@ public class PokedexActivity extends BaseMvpActivity implements PokedexContract.
     @OnClick(R.id.error_view)
     public void onReloadClick() {
         mPresenter.getPokedex();
-    }
-
-    @Override
-    public void onPokemonClick(PokemonEntrie pokemonEntrie) {
-        startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
     }
 
     @Override

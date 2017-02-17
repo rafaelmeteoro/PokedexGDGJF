@@ -3,6 +3,7 @@ package br.com.rafael.pokedexgdgjf.ui.favoritos;
 import java.util.List;
 
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
+import br.com.rafael.pokedexgdgjf.ui.base.MvpPresenter;
 import br.com.rafael.pokedexgdgjf.ui.base.MvpView;
 
 /**
@@ -21,10 +22,10 @@ public interface FavoritosContract {
 
         void showErro();
 
-        void showMessage(int resId);
+        void showMessage();
     }
 
-    interface Presenter {
+    interface Presenter extends MvpPresenter<View> {
         void getFavoritos();
 
         void deletePokemon(Pokemon pokemon);
