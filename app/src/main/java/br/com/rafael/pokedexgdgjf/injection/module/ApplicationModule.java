@@ -20,16 +20,16 @@ public class ApplicationModule {
     public static final String MAIN_THREAD = "mainThreadScheduler";
     public static final String JOB_THREAD = "jobScheduler";
 
-    private final Context mApplicationContext;
+    private final Context context;
 
-    public ApplicationModule(Context applicationContext) {
-        mApplicationContext = applicationContext.getApplicationContext();
+    public ApplicationModule(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     @Provides
     @Singleton
     Context provideApplicationContext() {
-        return mApplicationContext;
+        return context;
     }
 
     @Provides

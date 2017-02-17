@@ -14,20 +14,20 @@ import timber.log.Timber;
 public class FavoritosPresenter extends BasePresenter<FavoritosContract.View>
         implements FavoritosContract.Presenter {
 
-    private Repository mRepository;
+    private Repository repository;
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription subscriptions;
 
     @Inject
     public FavoritosPresenter(Repository repository) {
-        mSubscriptions = new CompositeSubscription();
+        subscriptions = new CompositeSubscription();
 
-        mRepository = repository;
+        this.repository = repository;
     }
 
     @Override
     protected void clean() {
-        mSubscriptions.clear();
+        subscriptions.clear();
     }
 
     @Override
@@ -35,8 +35,8 @@ public class FavoritosPresenter extends BasePresenter<FavoritosContract.View>
         FavoritosContract.View view = getView();
         view.showProgress();
 
-        mSubscriptions.add(
-                mRepository.getPokemonsSaved()
+        subscriptions.add(
+                repository.getPokemonsSaved()
                         .subscribe(pokemons -> {
                             view.hideProgress();
                             if (pokemons != null && !pokemons.isEmpty()) {
@@ -56,8 +56,8 @@ public class FavoritosPresenter extends BasePresenter<FavoritosContract.View>
     public void deletePokemon(Pokemon pokemon) {
         FavoritosContract.View view = getView();
 
-        mSubscriptions.add(
-                mRepository.deletePokemon(pokemon)
+        subscriptions.add(
+                repository.deletePokemon(pokemon)
                         .subscribe(isDeleted -> {
                             if (isDeleted) {
                                 view.showMessage();

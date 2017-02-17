@@ -15,22 +15,22 @@ import timber.log.Timber;
 public class PokemonPresenter extends BasePresenter<PokemonContract.View>
         implements PokemonContract.Presenter {
 
-    private GetPokemon mGetPokemon;
-    private Repository mRepository;
+    private GetPokemon getPokemon;
+    private Repository repository;
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription subscriptions;
 
     @Inject
     public PokemonPresenter(GetPokemon getPokemon, Repository repository) {
-        mGetPokemon = getPokemon;
-        mRepository = repository;
+        this.getPokemon = getPokemon;
+        this.repository = repository;
 
-        mSubscriptions = new CompositeSubscription();
+        subscriptions = new CompositeSubscription();
     }
 
     @Override
     protected void clean() {
-        mSubscriptions.clear();
+        subscriptions.clear();
     }
 
     @Override
@@ -38,8 +38,8 @@ public class PokemonPresenter extends BasePresenter<PokemonContract.View>
         PokemonContract.View view = getView();
         view.showProgress();
 
-        mSubscriptions.add(
-                mGetPokemon.execute(pokemonId)
+        subscriptions.add(
+                getPokemon.execute(pokemonId)
                         .subscribe(pokemon -> {
                             view.showPokemonName(pokemon.getName());
                             view.showPokemonHeight(pokemon.getHeight());
@@ -59,8 +59,8 @@ public class PokemonPresenter extends BasePresenter<PokemonContract.View>
     public void savePokmon(Pokemon pokemon) {
         PokemonContract.View view = getView();
 
-        mSubscriptions.add(
-                mRepository.saveUpdatePokemon(pokemon)
+        subscriptions.add(
+                repository.saveUpdatePokemon(pokemon)
                         .subscribe(isSaved -> {
                             if (isSaved) {
                                 view.showMessage();

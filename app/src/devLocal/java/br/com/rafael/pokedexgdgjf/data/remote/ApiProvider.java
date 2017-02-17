@@ -13,16 +13,16 @@ import retrofit2.Retrofit;
 @Singleton
 public class ApiProvider {
 
-    private final Retrofit mRetrofit;
-    private final Context mContext;
+    private final Retrofit retrofit;
+    private final Context context;
 
     @Inject
     public ApiProvider(Retrofit retrofit, Context context) {
-        mRetrofit = retrofit;
-        mContext = context;
+        this.retrofit = retrofit;
+        this.context = context;
     }
 
     public PokedexService getPokedexService() {
-        return new MockPokedexService(mContext);
+        return new MockPokedexService(context);
     }
 }

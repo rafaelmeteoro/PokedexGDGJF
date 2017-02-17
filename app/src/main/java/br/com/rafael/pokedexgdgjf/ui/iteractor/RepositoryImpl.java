@@ -17,33 +17,33 @@ import rx.Scheduler;
 
 public class RepositoryImpl extends UseCase implements Repository {
 
-    private final PokemonDao mPokemonDao;
+    private final PokemonDao pokemonDao;
 
     @Inject
     public RepositoryImpl(@Named(ApplicationModule.JOB_THREAD) Scheduler jobScheduler,
                           @Named(ApplicationModule.MAIN_THREAD) Scheduler mainThreadScheduler,
                           PokemonDao pokemonDao) {
         super(jobScheduler, mainThreadScheduler);
-        mPokemonDao = pokemonDao;
+        this.pokemonDao = pokemonDao;
     }
 
     @Override
     public Observable<List<Pokemon>> getPokemonsSaved() {
-        return Observable.just(mPokemonDao.getPokemonsSaved())
+        return Observable.just(pokemonDao.getPokemonsSaved())
                 .observeOn(getPostExecutationScheduler())
                 .subscribeOn(getJobScheduler());
     }
 
     @Override
     public Observable<Boolean> saveUpdatePokemon(Pokemon pokemon) {
-        return Observable.just(mPokemonDao.saveUpdatePokemon(pokemon))
+        return Observable.just(pokemonDao.saveUpdatePokemon(pokemon))
                 .observeOn(getPostExecutationScheduler())
                 .subscribeOn(getJobScheduler());
     }
 
     @Override
     public Observable<Boolean> deletePokemon(Pokemon pokemon) {
-        return Observable.just(mPokemonDao.deletePokemon(pokemon))
+        return Observable.just(pokemonDao.deletePokemon(pokemon))
                 .observeOn(getPostExecutationScheduler())
                 .subscribeOn(getJobScheduler());
     }

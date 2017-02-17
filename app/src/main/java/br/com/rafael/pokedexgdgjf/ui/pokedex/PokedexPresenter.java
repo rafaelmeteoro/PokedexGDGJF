@@ -13,20 +13,20 @@ import timber.log.Timber;
 public class PokedexPresenter extends BasePresenter<PokedexContract.View>
         implements PokedexContract.Presenter {
 
-    private GetPokedex mGetPokedex;
+    private GetPokedex getPokedex;
 
-    private CompositeSubscription mSubscriptions;
+    private CompositeSubscription subscriptions;
 
     @Inject
     public PokedexPresenter(GetPokedex getPokedex) {
-        mGetPokedex = getPokedex;
+        this.getPokedex = getPokedex;
 
-        mSubscriptions = new CompositeSubscription();
+        subscriptions = new CompositeSubscription();
     }
 
     @Override
     protected void clean() {
-        mSubscriptions.clear();
+        subscriptions.clear();
     }
 
     @Override
@@ -34,8 +34,8 @@ public class PokedexPresenter extends BasePresenter<PokedexContract.View>
         PokedexContract.View view = getView();
         view.showProgress();
 
-        mSubscriptions.add(
-                mGetPokedex.execute()
+        subscriptions.add(
+                getPokedex.execute()
                         .subscribe(
                                 pokedex -> {
                                     if (pokedex != null && pokedex.hasPokemons()) {

@@ -9,13 +9,13 @@ import retrofit2.Retrofit;
  **/
 public class ApiProvider {
 
-    private final Retrofit mRetrofit;
+    private final Retrofit retrofit;
 
     public ApiProvider(Retrofit retrofit, Context context) {
-        mRetrofit = retrofit;
+        this.retrofit = retrofit;
     }
 
     public PokedexService getPokedexService() {
-        return mRetrofit.create(PokedexService.class);
+        return retrofit.create(PokedexService.class);
     }
 }

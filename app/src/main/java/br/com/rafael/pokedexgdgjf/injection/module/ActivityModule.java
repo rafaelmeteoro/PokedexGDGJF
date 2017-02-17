@@ -13,21 +13,21 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private final AppCompatActivity mActivity;
+    private final AppCompatActivity activity;
 
     public ActivityModule(AppCompatActivity activity) {
-        mActivity = activity;
+        this.activity = activity;
     }
 
     @Provides
     @PerActivity
     AppCompatActivity activity() {
-        return mActivity;
+        return activity;
     }
 
     @Provides
     @PerActivity
     FragmentManager fragmentManager() {
-        return mActivity.getSupportFragmentManager();
+        return activity.getSupportFragmentManager();
     }
 }

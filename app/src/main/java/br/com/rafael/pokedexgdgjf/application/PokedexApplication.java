@@ -20,7 +20,7 @@ import timber.log.Timber;
  **/
 public class PokedexApplication extends Application {
 
-    private LibraryComponent mComponent;
+    private LibraryComponent component;
 
     @Override
     public void onCreate() {
@@ -51,14 +51,14 @@ public class PokedexApplication extends Application {
     }
 
     private void initDagger() {
-        mComponent = DaggerLibraryComponent.builder()
+        component = DaggerLibraryComponent.builder()
                 .libraryModule(new LibraryModule(getApplicationContext()))
                 .networkModule(new NetworkModule(BuildConfig.API_URL))
                 .build();
     }
 
     public LibraryComponent getComponent() {
-        return mComponent;
+        return component;
     }
 
     public static PokedexApplication get(Context context) {

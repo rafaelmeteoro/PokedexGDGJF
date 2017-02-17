@@ -9,24 +9,24 @@ import br.com.rafael.pokedexgdgjf.ui.exception.MvpViewNotAttachedException;
 
 public abstract class BasePresenter<T extends MvpView> implements MvpPresenter<T> {
 
-    private T mAttachedView;
+    private T attachedView;
 
     @Override
     public void attachView(T view) {
-        mAttachedView = view;
+        attachedView = view;
     }
 
     @Override
     public void detachView() {
         clean();
-        mAttachedView = null;
+        attachedView = null;
     }
 
     protected T getView() {
-        if (mAttachedView == null) {
+        if (attachedView == null) {
             throw new MvpViewNotAttachedException(getClass().getSimpleName());
         }
-        return mAttachedView;
+        return attachedView;
     }
 
     protected abstract void clean();
