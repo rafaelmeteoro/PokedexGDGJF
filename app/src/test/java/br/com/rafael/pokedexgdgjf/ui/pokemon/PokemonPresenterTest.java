@@ -8,16 +8,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.test.common.TestDataFactory;
 import br.com.rafael.pokedexgdgjf.util.RxSchedulersOverrideRule;
 import rx.Observable;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by rafael on 9/2/16.
@@ -27,9 +24,6 @@ public class PokemonPresenterTest {
 
     @Mock
     PokemonContract.View mMockView;
-
-    @Mock
-    DataManager mMockDataManager;
 
     private PokemonPresenter mPresenter;
 
@@ -81,10 +75,10 @@ public class PokemonPresenterTest {
     }
 
     private void stubDataManagerGetPokemon(Observable<Pokemon> observable) {
-        when(mMockDataManager.getPokemon(anyInt())).thenReturn(observable);
+        //when(mMockDataManager.getPokemon(anyInt())).thenReturn(observable);
     }
 
     private void stubDataManagerSavePokemon(Observable<Boolean> observable) {
-        when(mMockDataManager.saveUpdatePokemon((Pokemon) anyObject())).thenReturn(observable);
+        //when(mMockDataManager.saveUpdatePokemon((Pokemon) anyObject())).thenReturn(observable);
     }
 }

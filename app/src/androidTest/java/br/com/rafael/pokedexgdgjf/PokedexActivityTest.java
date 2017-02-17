@@ -44,8 +44,8 @@ public class PokedexActivityTest {
 
     @Test
     public void errorViewsDisplayWhenLoadingContentFails() throws InterruptedException {
-        when(component.getMockDataManager().getPokedex())
-                .thenReturn(Observable.<Pokedex>error(new RuntimeException()));
+        /*when(component.getMockDataManager().getPokedex())
+                .thenReturn(Observable.<Pokedex>error(new RuntimeException()));*/
         main.launchActivity(null);
 
         onView(withId(R.id.error_view))
@@ -56,8 +56,8 @@ public class PokedexActivityTest {
     @Test
     public void emptyContentViewsDisplayWhenLoadingContentFails() throws InterruptedException {
         Pokedex pokedex = TestDataFactory.newPokedexPokemonEntriesEmpty();
-        when(component.getMockDataManager().getPokedex())
-                .thenReturn(Observable.just(pokedex));
+        /*when(component.getMockDataManager().getPokedex())
+                .thenReturn(Observable.just(pokedex));*/
         main.launchActivity(null);
 
         onView(withId(R.id.error_view))
@@ -67,13 +67,13 @@ public class PokedexActivityTest {
 
     @Test
     public void pokemonItemViewsDisplayWhenClickingReload() throws InterruptedException {
-        when(component.getMockDataManager().getPokedex())
-                .thenReturn(Observable.<Pokedex>error(new RuntimeException()));
+        /*when(component.getMockDataManager().getPokedex())
+                .thenReturn(Observable.<Pokedex>error(new RuntimeException()));*/
         main.launchActivity(null);
 
         Pokedex pokedex = TestDataFactory.newPokedex();
-        when(component.getMockDataManager().getPokedex())
-                .thenReturn(Observable.just(pokedex));
+        /*when(component.getMockDataManager().getPokedex())
+                .thenReturn(Observable.just(pokedex));*/
 
         onView(withId(R.id.error_view))
                 .perform(click());
@@ -87,8 +87,8 @@ public class PokedexActivityTest {
     @Test
     public void pokemonItemViewsDisplay() throws InterruptedException {
         Pokedex pokedex = TestDataFactory.newPokedex();
-        when(component.getMockDataManager().getPokedex())
-                .thenReturn(Observable.just(pokedex));
+        /*when(component.getMockDataManager().getPokedex())
+                .thenReturn(Observable.just(pokedex));*/
         main.launchActivity(null);
 
         for (int i = 0; i < pokedex.getPokemonEntries().size(); i++) {

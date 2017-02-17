@@ -44,8 +44,8 @@ public class PokemonActivityTest {
     @Test
     public void showPokemonViewsDisplay() {
         Pokemon pokemon = TestDataFactory.newPokemon();
-        when(component.getMockDataManager().getPokemon(anyInt()))
-                .thenReturn(Observable.just(pokemon));
+        /*when(component.getMockDataManager().getPokemon(anyInt()))
+                .thenReturn(Observable.just(pokemon));*/
 
         Intent intent = PokemonActivity.getStartIntent(
                 InstrumentationRegistry.getTargetContext(), pokemon.getId());

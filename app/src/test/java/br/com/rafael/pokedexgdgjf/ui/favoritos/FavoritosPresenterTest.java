@@ -11,16 +11,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.test.common.TestDataFactory;
 import br.com.rafael.pokedexgdgjf.util.RxSchedulersOverrideRule;
 import rx.Observable;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by rafael on 9/2/16.
@@ -31,8 +28,6 @@ public class FavoritosPresenterTest {
     @Mock
     FavoritosContract.View mMockView;
 
-    @Mock
-    DataManager mMockDataManager;
 
     private FavoritosPresenter mPresenter;
 
@@ -96,10 +91,10 @@ public class FavoritosPresenterTest {
     }
 
     private void stubDataManagerGetFavoritos(Observable<List<Pokemon>> observable) {
-        when(mMockDataManager.getPokemonsSaved()).thenReturn(observable);
+        //when(mMockDataManager.getPokemonsSaved()).thenReturn(observable);
     }
 
     private void stubDataManagerDeletePokemon(Observable<Boolean> observable) {
-        when(mMockDataManager.deletePokemon((Pokemon) anyObject())).thenReturn(observable);
+        //when(mMockDataManager.deletePokemon((Pokemon) anyObject())).thenReturn(observable);
     }
 }

@@ -6,12 +6,8 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import br.com.rafael.pokedexgdgjf.BuildConfig;
 import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
-import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
 import br.com.rafael.pokedexgdgjf.test.common.injection.component.TestComponent;
-import br.com.rafael.pokedexgdgjf.test.common.injection.module.ApplicationTestModule;
 
 /**
  * Created by rafael on 8/29/16.
@@ -27,11 +23,6 @@ public class TestComponentRule implements TestRule {
 
     public Context getContext() {
         return mContext;
-    }
-
-    public DataManager getMockDataManager() {
-        //return mTestComponent.dataManager();
-        return null;
     }
 
     public void setupDaggerTestComponentInApplication() {
