@@ -18,16 +18,16 @@ import rx.schedulers.Schedulers;
 @Module
 public class LibraryModule {
 
-    private final Context mApplicationContext;
+    private final Context context;
 
-    public LibraryModule(Context applicationContext) {
-        mApplicationContext = applicationContext.getApplicationContext();
+    public LibraryModule(Context context) {
+        this.context = context.getApplicationContext();
     }
 
     @Provides
     @Singleton
     Context provideApplicationContext() {
-        return mApplicationContext;
+        return context;
     }
 
     @Provides

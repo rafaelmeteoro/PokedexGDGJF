@@ -41,19 +41,19 @@ public class PokemonActivity extends BaseActivity
     private static final int DEFAULT_ID = 0;
 
     @Inject
-    protected PokemonContract.Presenter mPresenter;
+    protected PokemonContract.Presenter presenter;
 
     @BindView(R.id.toolbar)
-    protected Toolbar mToolbar;
+    protected Toolbar toolbar;
 
     @BindView(R.id.content_view)
-    protected ScrollView mContentView;
+    protected ScrollView contentView;
 
     @BindView(R.id.loading_view)
-    protected ProgressBar mLoadingView;
+    protected ProgressBar loadingView;
 
     @BindView(R.id.error_view)
-    protected TextView mErrorView;
+    protected TextView errorView;
 
     @BindView(R.id.iv_pokemon)
     protected CircleImageView pokemonImage;
@@ -67,10 +67,10 @@ public class PokemonActivity extends BaseActivity
     @BindView(R.id.pokemon_height)
     protected TextView pokemonHeight;
 
-    private int mPokemonId;
-    private Pokemon mPokemon;
+    private int pokemonId;
+    private Pokemon pokemon;
 
-    PokemonComponent mComponent;
+    PokemonComponent component;
 
     public static Intent getStartIntent(Context context, int pokemonId) {
         Intent intent = new Intent(context, PokemonActivity.class);
@@ -100,44 +100,44 @@ public class PokemonActivity extends BaseActivity
     @Override
     protected void onStop() {
         super.onStop();
-        if (mPresenter != null) {
-            mPresenter.detachView();
+        if (presenter != null) {
+            presenter.detachView();
         }
     }
 
     private void initialize() {
-        mPokemonId = getIntent().getIntExtra(EXTRA_POKEMON_ID, DEFAULT_ID);
+        pokemonId = getIntent().getIntExtra(EXTRA_POKEMON_ID, DEFAULT_ID);
     }
 
     private void initializeToolBar() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private void initializeInjection() {
-        mComponent = DaggerPokemonComponent.builder()
+        component = DaggerPokemonComponent.builder()
                 .libraryComponent(((PokedexApplication) getApplication()).getComponent())
                 .activityModule(getActivityModule())
                 .pokemonModule(new PokemonModule())
                 .build();
-        mComponent.inject(this);
+        component.inject(this);
     }
 
     private void initializePresenter() {
-        if (mPresenter != null) {
-            mPresenter.attachView(this);
+        if (presenter != null) {
+            presenter.attachView(this);
         }
     }
 
     private void initializeContents() {
-        mPresenter.getPokemon(mPokemonId);
+        presenter.getPokemon(pokemonId);
     }
 
     @Override
     public PokemonComponent getComponent() {
-        return mComponent;
+        return component;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class PokemonActivity extends BaseActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.menu_save).setVisible(mPokemon != null);
+        menu.findItem(R.id.menu_save).setVisible(pokemon != null);
         return true;
     }
 
@@ -160,7 +160,7 @@ public class PokemonActivity extends BaseActivity
                 onBackPressed();
                 return true;
             case R.id.menu_save:
-                mPresenter.savePokmon(mPokemon);
+                presenter.savePokmon(pokemon);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -169,33 +169,33 @@ public class PokemonActivity extends BaseActivity
 
     @OnClick(R.id.error_view)
     public void onReloadClick() {
-        mPresenter.getPokemon(mPokemonId);
+        presenter.getPokemon(pokemonId);
     }
 
     @Override
     public void showProgress() {
-        mContentView.setVisibility(View.GONE);
-        mLoadingView.setVisibility(View.VISIBLE);
-        mErrorView.setVisibility(View.GONE);
+        contentView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.VISIBLE);
+        errorView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
-        mLoadingView.setVisibility(View.GONE);
+        loadingView.setVisibility(View.GONE);
     }
 
     @Override
     public void showError() {
-        mContentView.setVisibility(View.GONE);
-        mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
-        mErrorView.setText(getString(R.string.activity_pokemon_load_error));
-        mErrorView.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
+        errorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
+        errorView.setText(getString(R.string.activity_pokemon_load_error));
+        errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showPokemon(Pokemon pokemon) {
-        mPokemon = pokemon;
-        mContentView.setVisibility(View.VISIBLE);
+        this.pokemon = pokemon;
+        contentView.setVisibility(View.VISIBLE);
         invalidateOptionsMenu();
     }
 
@@ -226,7 +226,7 @@ public class PokemonActivity extends BaseActivity
     @Override
     public void showMessage() {
         Snackbar snackbar = Snackbar.make(
-                mContentView,
+                contentView,
                 R.string.activity_pokemon_saved,
                 Snackbar.LENGTH_LONG);
         snackbar.show();

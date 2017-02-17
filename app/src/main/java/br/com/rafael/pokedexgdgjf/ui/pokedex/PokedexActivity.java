@@ -40,29 +40,29 @@ public class PokedexActivity extends BaseActivity
         implements PokedexContract.View, HasComponent<PokedexComponent> {
 
     @Inject
-    protected PokedexContract.Presenter mPresenter;
+    protected PokedexContract.Presenter presenter;
 
     @Inject
-    protected PokedexAdapter mAdapter;
+    protected PokedexAdapter adapter;
 
     @BindView(R.id.toolbar)
-    protected Toolbar mToolbar;
+    protected Toolbar toolbar;
 
     @BindView(R.id.content_view)
-    protected SwipeRefreshLayout mContentView;
+    protected SwipeRefreshLayout contentView;
 
     @BindView(R.id.recycler_view)
-    protected RecyclerView mRecyclerView;
+    protected RecyclerView recyclerView;
 
     @BindView(R.id.loading_view)
-    protected ProgressBar mLoadingView;
+    protected ProgressBar loadingView;
 
     @BindView(R.id.error_view)
-    protected TextView mErrorView;
+    protected TextView errorView;
 
-    PokedexComponent mComponent;
+    PokedexComponent component;
 
-    private final OnPokemonClickListener mOnPokemonClickListener =
+    private final OnPokemonClickListener onPokemonClickListener =
             pokemonEntrie ->
                     startActivity(PokemonActivity.getStartIntent(this, pokemonEntrie.getEntryNumber()));
 
@@ -88,45 +88,45 @@ public class PokedexActivity extends BaseActivity
     @Override
     protected void onStop() {
         super.onStop();
-        if (mPresenter != null) {
-            mPresenter.detachView();
+        if (presenter != null) {
+            presenter.detachView();
         }
     }
 
     private void initialize() {
-        mAdapter.setListener(mOnPokemonClickListener);
-        mContentView.setEnabled(false);
+        adapter.setListener(onPokemonClickListener);
+        contentView.setEnabled(false);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initializeToolBar() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void initializeInjection() {
-        mComponent = DaggerPokedexComponent.builder()
+        component = DaggerPokedexComponent.builder()
                 .libraryComponent(((PokedexApplication) getApplication()).getComponent())
                 .activityModule(getActivityModule())
                 .pokedexModule(new PokedexModule())
                 .build();
-        mComponent.inject(this);
+        component.inject(this);
     }
 
     private void initializePresenter() {
-        if (mPresenter != null) {
-            mPresenter.attachView(this);
+        if (presenter != null) {
+            presenter.attachView(this);
         }
     }
 
     private void initializeContents() {
-        mPresenter.getPokedex();
+        presenter.getPokedex();
     }
 
     @Override
     public PokedexComponent getComponent() {
-        return mComponent;
+        return component;
     }
 
     @Override
@@ -149,45 +149,45 @@ public class PokedexActivity extends BaseActivity
 
     @OnClick(R.id.error_view)
     public void onReloadClick() {
-        mPresenter.getPokedex();
+        presenter.getPokedex();
     }
 
     @Override
     public void showProgress() {
-        if (mRecyclerView.getVisibility() == View.VISIBLE && mAdapter.getItemCount() > 0) {
-            mContentView.setRefreshing(true);
+        if (recyclerView.getVisibility() == View.VISIBLE && adapter.getItemCount() > 0) {
+            contentView.setRefreshing(true);
         } else {
-            mLoadingView.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.VISIBLE);
         }
-        mErrorView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
-        mContentView.setRefreshing(false);
-        mLoadingView.setVisibility(View.GONE);
+        contentView.setRefreshing(false);
+        loadingView.setVisibility(View.GONE);
     }
 
     @Override
     public void showPokemonEntries(List<PokemonEntrie> list) {
-        mAdapter.setList(list);
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setVisibility(View.VISIBLE);
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEmpty() {
-        mRecyclerView.setVisibility(View.GONE);
-        mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_empty_glass_gray, 0, 0);
-        mErrorView.setText(getString(R.string.activity_pokedex_load_list_empty));
-        mErrorView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        errorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_empty_glass_gray, 0, 0);
+        errorView.setText(getString(R.string.activity_pokedex_load_list_empty));
+        errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showError() {
-        mRecyclerView.setVisibility(View.GONE);
-        mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
-        mErrorView.setText(getString(R.string.activity_pokedex_load_list_error));
-        mErrorView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        errorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
+        errorView.setText(getString(R.string.activity_pokedex_load_list_error));
+        errorView.setVisibility(View.VISIBLE);
     }
 }

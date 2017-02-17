@@ -38,30 +38,30 @@ public class FavoritosActivity extends BaseActivity
     private static final int NUM_COLUMN = 2;
 
     @Inject
-    protected FavoritosContract.Presenter mPresenter;
+    protected FavoritosContract.Presenter presenter;
 
     @Inject
-    protected FavoritosAdapter mAdapter;
+    protected FavoritosAdapter adapter;
 
     @BindView(R.id.toolbar)
-    protected Toolbar mToolbar;
+    protected Toolbar toolbar;
 
     @BindView(R.id.content_view)
-    protected SwipeRefreshLayout mContentView;
+    protected SwipeRefreshLayout contentView;
 
     @BindView(R.id.recycler_view)
-    protected RecyclerView mRecyclerView;
+    protected RecyclerView recyclerView;
 
     @BindView(R.id.loading_view)
-    protected ProgressBar mLoadingView;
+    protected ProgressBar loadingView;
 
     @BindView(R.id.error_view)
-    protected TextView mErrorView;
+    protected TextView errorView;
 
-    FavoritosComponent mComponent;
+    FavoritosComponent component;
 
-    private final OnFavoritosClickListener mOnFavoritosClickListener =
-            pokemon -> mPresenter.deletePokemon(pokemon);
+    private final OnFavoritosClickListener onFavoritosClickListener =
+            pokemon -> presenter.deletePokemon(pokemon);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,48 +85,48 @@ public class FavoritosActivity extends BaseActivity
     @Override
     protected void onStop() {
         super.onStop();
-        if (mPresenter != null) {
-            mPresenter.detachView();
+        if (presenter != null) {
+            presenter.detachView();
         }
     }
 
     private void initialize() {
-        mAdapter.setListener(mOnFavoritosClickListener);
-        mContentView.setEnabled(false);
+        adapter.setListener(onFavoritosClickListener);
+        contentView.setEnabled(false);
 
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, NUM_COLUMN));
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, NUM_COLUMN));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initializeToolBar() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
     private void initializeInjection() {
-        mComponent = DaggerFavoritosComponent.builder()
+        component = DaggerFavoritosComponent.builder()
                 .libraryComponent(((PokedexApplication) getApplication()).getComponent())
                 .activityModule(getActivityModule())
                 .favoritosModule(new FavoritosModule())
                 .build();
-        mComponent.inject(this);
+        component.inject(this);
     }
 
     private void initializePresenter() {
-        if (mPresenter != null) {
-            mPresenter.attachView(this);
+        if (presenter != null) {
+            presenter.attachView(this);
         }
     }
 
     private void initializeContents() {
-        mPresenter.getFavoritos();
+        presenter.getFavoritos();
     }
 
     @Override
     public FavoritosComponent getComponent() {
-        return mComponent;
+        return component;
     }
 
     @Override
@@ -142,52 +142,52 @@ public class FavoritosActivity extends BaseActivity
 
     @OnClick(R.id.error_view)
     public void onReloadClick() {
-        mPresenter.getFavoritos();
+        presenter.getFavoritos();
     }
 
     @Override
     public void showProgress() {
-        if (mRecyclerView.getVisibility() == View.VISIBLE && mAdapter.getItemCount() > 0) {
-            mContentView.setRefreshing(true);
+        if (recyclerView.getVisibility() == View.VISIBLE && adapter.getItemCount() > 0) {
+            contentView.setRefreshing(true);
         } else {
-            mLoadingView.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.VISIBLE);
         }
-        mErrorView.setVisibility(View.GONE);
+        errorView.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
-        mContentView.setRefreshing(false);
-        mLoadingView.setVisibility(View.GONE);
+        contentView.setRefreshing(false);
+        loadingView.setVisibility(View.GONE);
     }
 
     @Override
     public void showPokemons(List<Pokemon> pokemons) {
-        mAdapter.setList(pokemons);
-        mAdapter.notifyDataSetChanged();
-        mRecyclerView.setVisibility(View.VISIBLE);
+        adapter.setList(pokemons);
+        adapter.notifyDataSetChanged();
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEmpty() {
-        mRecyclerView.setVisibility(View.GONE);
-        mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_empty_glass_gray, 0, 0);
-        mErrorView.setText(getString(R.string.activity_pokedex_load_list_empty));
-        mErrorView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        errorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_empty_glass_gray, 0, 0);
+        errorView.setText(getString(R.string.activity_pokedex_load_list_empty));
+        errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showErro() {
-        mRecyclerView.setVisibility(View.GONE);
-        mErrorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
-        mErrorView.setText(getString(R.string.activity_pokedex_load_list_error));
-        mErrorView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        errorView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_sentiment_very_dissatisfied_gray, 0, 0);
+        errorView.setText(getString(R.string.activity_pokedex_load_list_error));
+        errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showMessage() {
         Snackbar snackbar = Snackbar.make(
-                mContentView,
+                contentView,
                 R.string.activity_favorito_deleted,
                 Snackbar.LENGTH_LONG);
         snackbar.show();

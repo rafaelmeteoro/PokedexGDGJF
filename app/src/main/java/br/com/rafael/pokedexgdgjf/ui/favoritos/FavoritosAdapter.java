@@ -27,12 +27,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  **/
 public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Pokemon> mList;
-    private OnFavoritosClickListener mListener;
+    private List<Pokemon> list;
+    private OnFavoritosClickListener listener;
 
     @Inject
     public FavoritosAdapter() {
-        mList = Collections.emptyList();
+        list = Collections.emptyList();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private void onBindItemFavoritos(ItemFavoritosViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Pokemon pokemon = mList.get(position);
+        Pokemon pokemon = list.get(position);
         holder.pokemonName.setText(pokemon.getName());
         holder.pokemonWeight.setText(String.valueOf(pokemon.getWeight()));
         holder.pokemonHeight.setText(String.valueOf(pokemon.getHeight()));
@@ -62,23 +62,23 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .into(holder.ivPokemon);
 
         holder.ibDelete.setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.onPokemonClick(pokemon);
+            if (listener != null) {
+                listener.onPokemonClick(pokemon);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     public void setList(List<Pokemon> list) {
-        mList = list;
+        this.list = list;
     }
 
     public void setListener(OnFavoritosClickListener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     protected class ItemFavoritosViewHolder extends RecyclerView.ViewHolder {

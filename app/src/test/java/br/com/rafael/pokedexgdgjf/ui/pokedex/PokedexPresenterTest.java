@@ -31,8 +31,8 @@ public class PokedexPresenterTest {
 
     @Before
     public void setup() {
-        /*mPresenter = new PokedexPresenter(mMockDataManager);
-        mPresenter.attachView(mMockView);*/
+        /*presenter = new PokedexPresenter(mMockDataManager);
+        presenter.attachView(mMockView);*/
     }
 
     @After

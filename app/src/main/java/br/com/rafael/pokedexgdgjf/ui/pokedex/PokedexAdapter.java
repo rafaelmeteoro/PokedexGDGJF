@@ -27,12 +27,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  **/
 public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<PokemonEntrie> mList;
-    private OnPokemonClickListener mListener;
+    private List<PokemonEntrie> list;
+    private OnPokemonClickListener listener;
 
     @Inject
     public PokedexAdapter() {
-        mList = Collections.emptyList();
+        list = Collections.emptyList();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void onBindItemPokedex(ItemPokedexViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        PokemonEntrie pokemonEntrie = mList.get(position);
+        PokemonEntrie pokemonEntrie = list.get(position);
         holder.pokemonName.setText(pokemonEntrie.getPokemonSpecies().getName());
         holder.llItem.setTag(holder);
 
@@ -61,23 +61,23 @@ public class PokedexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 .into(holder.ivPokemon);
 
         holder.llItem.setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.onPokemonClick(pokemonEntrie);
+            if (listener != null) {
+                listener.onPokemonClick(pokemonEntrie);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     public void setList(List<PokemonEntrie> list) {
-        mList = list;
+        this.list = list;
     }
 
     public void setListener(OnPokemonClickListener listener) {
-        mListener = listener;
+        this.listener = listener;
     }
 
     protected class ItemPokedexViewHolder extends RecyclerView.ViewHolder {

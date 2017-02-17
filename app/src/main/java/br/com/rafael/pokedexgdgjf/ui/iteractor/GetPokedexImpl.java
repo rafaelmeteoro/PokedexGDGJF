@@ -15,21 +15,21 @@ import rx.Scheduler;
 
 public class GetPokedexImpl extends UseCase implements GetPokedex {
 
-    private final ApiProvider mApiProvider;
+    private final ApiProvider apiProvider;
 
     @Inject
     public GetPokedexImpl(@Named(ApplicationModule.JOB_THREAD) Scheduler jobScheduler,
                           @Named(ApplicationModule.MAIN_THREAD) Scheduler mainThreadScheduler,
                           ApiProvider apiProvider) {
         super(jobScheduler, mainThreadScheduler);
-        mApiProvider = apiProvider;
+        this.apiProvider = apiProvider;
     }
 
     @Override
     public Observable<Pokedex> execute() {
         // Neste exemplo pokedex id é fixo
         int pokedexId = 2;
-        return mApiProvider
+        return apiProvider
                 .getPokedexService()
                 .getPokedex(pokedexId)
                 .observeOn(getPostExecutationScheduler())

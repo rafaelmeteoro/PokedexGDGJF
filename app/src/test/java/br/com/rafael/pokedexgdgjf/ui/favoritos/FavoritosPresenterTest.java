@@ -36,7 +36,7 @@ public class FavoritosPresenterTest {
 
     @Before
     public void setup() {
-        //mPresenter = new FavoritosPresenter(mMockDataManager);
+        //presenter = new FavoritosPresenter(mMockDataManager);
         mPresenter.attachView(mMockView);
     }
 

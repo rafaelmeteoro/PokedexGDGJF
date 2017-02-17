@@ -8,19 +8,19 @@ import rx.Scheduler;
 
 public class UseCase {
 
-    private final Scheduler mJobScheduler;
-    private final Scheduler mPostExecutationScheduler;
+    private final Scheduler jobScheduler;
+    private final Scheduler postExecutationScheduler;
 
     public UseCase(Scheduler jobScheduler, Scheduler postExecutationScheduler) {
-        mJobScheduler = jobScheduler;
-        mPostExecutationScheduler = postExecutationScheduler;
+        this.jobScheduler = jobScheduler;
+        this.postExecutationScheduler = postExecutationScheduler;
     }
 
     protected Scheduler getJobScheduler() {
-        return mJobScheduler;
+        return jobScheduler;
     }
 
     protected Scheduler getPostExecutationScheduler() {
-        return mPostExecutationScheduler;
+        return postExecutationScheduler;
     }
 }

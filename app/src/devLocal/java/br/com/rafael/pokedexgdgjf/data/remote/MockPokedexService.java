@@ -15,10 +15,10 @@ import rx.Observable;
  **/
 public class MockPokedexService implements PokedexService {
 
-    private Context mContext;
+    private Context context;
 
     public MockPokedexService(Context context) {
-        mContext = context;
+        this.context = context;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class MockPokedexService implements PokedexService {
         String pokedexJson;
         Pokedex pokedex;
         try {
-            pokedexJson = AssetsHelper.getStringFromAssets(mContext, "pokedex_success.json");
+            pokedexJson = AssetsHelper.getStringFromAssets(context, "pokedex_success.json");
             Gson gson = new Gson();
             pokedex = gson.fromJson(pokedexJson, Pokedex.class);
             return Observable.just(pokedex);
@@ -40,7 +40,7 @@ public class MockPokedexService implements PokedexService {
         String pokemonJson;
         Pokemon pokemon;
         try {
-            pokemonJson = AssetsHelper.getStringFromAssets(mContext, "pokemon_success.json");
+            pokemonJson = AssetsHelper.getStringFromAssets(context, "pokemon_success.json");
             Gson gson = new Gson();
             pokemon = gson.fromJson(pokemonJson, Pokemon.class);
             return Observable.just(pokemon);

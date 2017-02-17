@@ -32,7 +32,7 @@ public class PokemonPresenterTest {
 
     @Before
     public void setup() {
-        //mPresenter = new PokemonPresenter(mMockDataManager);
+        //presenter = new PokemonPresenter(mMockDataManager);
         mPresenter.attachView(mMockView);
     }
 

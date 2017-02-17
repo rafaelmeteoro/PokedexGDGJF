@@ -3,9 +3,6 @@
     <!-- View Error -->
     <string name="view_erro_text">Ocorreu um erro</string>
 
-    <!-- View Empty -->
-    <string name="view_empty_text">Lista Vazia</string>
-
     <!-- Activity Pokedex -->
     <string name="activity_pokedex_load_list_error">Ocorreu algum erro ao carregar a lista. Tente novamente.</string>
     <string name="activity_pokedex_load_list_empty">Lista Vazia</string>

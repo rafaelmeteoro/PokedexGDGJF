@@ -1,8 +1,4 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
     <!-- View Error -->
     <dimen name="view_error_text_size">20sp</dimen>
     <dimen name="view_erro_padding">16dp</dimen>
@@ -29,6 +25,5 @@
     <dimen name="merge_pokemon_view_height_margin_right">10dp</dimen>
     <dimen name="merge_pokemon_view_height_text_size">20sp</dimen>
     <dimen name="merge_pokemon_view_ib_delete_padding">10dp</dimen>
-    <dimen name="merge_pokmeon_view_ib_margin_top">20dp</dimen>
 
 </resources>
