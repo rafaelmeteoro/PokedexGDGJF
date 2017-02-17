@@ -76,7 +76,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    ApiProvider provideApiProvider(Retrofit retrofit) {
-        return new ApiProvider(retrofit);
+    ApiProvider provideApiProvider(Retrofit retrofit, Context context) {
+        return new ApiProvider(retrofit, context);
     }
 }

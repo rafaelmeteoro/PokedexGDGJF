@@ -1,5 +1,7 @@
 package br.com.rafael.pokedexgdgjf.data.remote;
 
+import android.content.Context;
+
 import retrofit2.Retrofit;
 
 /**
@@ -9,7 +11,7 @@ public class ApiProvider {
 
     private final Retrofit mRetrofit;
 
-    public ApiProvider(Retrofit retrofit) {
+    public ApiProvider(Retrofit retrofit, Context context) {
         mRetrofit = retrofit;
     }
 
