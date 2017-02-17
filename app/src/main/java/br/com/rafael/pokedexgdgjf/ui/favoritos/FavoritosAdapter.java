@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
+import br.com.rafael.pokedexgdgjf.ui.listener.OnFavoritosClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -24,14 +25,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by rafael on 8/29/16.
  **/
-public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Pokemon> mList;
-    private FavoritosItemClickListener mListener;
-
-    public interface FavoritosItemClickListener {
-        void onPokemonClick(Pokemon pokemon);
-    }
+    private OnFavoritosClickListener mListener;
 
     @Inject
     public FavoritosAdapter() {
@@ -40,10 +37,9 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_favoritos, parent, false);
-        ItemFavoritosViewHolder holder = new ItemFavoritosViewHolder(view);
-        holder.ibDelete.setOnClickListener(this);
-        return holder;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_item_favoritos, parent, false);
+        return new ItemFavoritosViewHolder(view);
     }
 
     @Override
@@ -64,6 +60,12 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .placeholder(R.drawable.pokeball)
                 .error(R.drawable.cloud_outline_off)
                 .into(holder.ivPokemon);
+
+        holder.ibDelete.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onPokemonClick(pokemon);
+            }
+        });
     }
 
     @Override
@@ -71,20 +73,11 @@ public class FavoritosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mList != null ? mList.size() : 0;
     }
 
-    @Override
-    public void onClick(View view) {
-        int itemId = view.getId();
-        if (itemId == R.id.ib_delete && mListener != null) {
-            ItemFavoritosViewHolder holder = (ItemFavoritosViewHolder) view.getTag();
-            mListener.onPokemonClick(mList.get(holder.getAdapterPosition()));
-        }
-    }
-
     public void setList(List<Pokemon> list) {
         mList = list;
     }
 
-    public void setListener(FavoritosItemClickListener listener) {
+    public void setListener(OnFavoritosClickListener listener) {
         mListener = listener;
     }
 

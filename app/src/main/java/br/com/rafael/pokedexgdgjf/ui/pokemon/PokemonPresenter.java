@@ -2,14 +2,10 @@ package br.com.rafael.pokedexgdgjf.ui.pokemon;
 
 import javax.inject.Inject;
 
-import br.com.rafael.pokedexgdgjf.R;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import br.com.rafael.pokedexgdgjf.ui.base.BasePresenter;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
 import br.com.rafael.pokedexgdgjf.ui.iteractor.GetPokemon;
 import br.com.rafael.pokedexgdgjf.ui.iteractor.Repository;
-import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 

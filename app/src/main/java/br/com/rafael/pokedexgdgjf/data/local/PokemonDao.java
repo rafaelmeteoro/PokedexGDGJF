@@ -2,9 +2,6 @@ package br.com.rafael.pokedexgdgjf.data.local;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 
 /**

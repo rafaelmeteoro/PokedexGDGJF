@@ -2,7 +2,6 @@ package br.com.rafael.pokedexgdgjf.ui.iteractor;
 
 import java.util.List;
 
-import br.com.rafael.pokedexgdgjf.data.model.Pokedex;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
 import rx.Observable;
 
