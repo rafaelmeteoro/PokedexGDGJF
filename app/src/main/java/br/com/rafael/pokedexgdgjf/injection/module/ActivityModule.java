@@ -1,9 +1,9 @@
 package br.com.rafael.pokedexgdgjf.injection.module;
 
-import android.app.Activity;
-import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
-import br.com.rafael.pokedexgdgjf.injection.ActivityContext;
+import br.com.rafael.pokedexgdgjf.injection.PerActivity;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,20 +13,21 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private final Activity mActivity;
+    private final AppCompatActivity mActivity;
 
-    public ActivityModule(Activity activity) {
+    public ActivityModule(AppCompatActivity activity) {
         mActivity = activity;
     }
 
     @Provides
-    Activity provideActivity() {
+    @PerActivity
+    AppCompatActivity activity() {
         return mActivity;
     }
 
     @Provides
-    @ActivityContext
-    Context provideContext() {
-        return mActivity;
+    @PerActivity
+    FragmentManager fragmentManager() {
+        return mActivity.getSupportFragmentManager();
     }
 }

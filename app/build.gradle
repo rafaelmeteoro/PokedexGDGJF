@@ -1,19 +1,29 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.getkeepsafe.dexcount'
+
+apply from: "../configuration.gradle"
+apply from: "../dependencies.gradle"
 
 android {
 
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion sdk.compileSdkVersion
+    buildToolsVersion sdk.buildToolsVersion
 
     defaultConfig {
         applicationId "br.com.rafael.pokedexgdgjf"
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdkVersion sdk.minSdkVersion
+        targetSdkVersion sdk.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "${applicationId}.runner.RxAndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -27,7 +37,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_URL", "\"http://pokeapi.co/api/v2/\""
             signingConfig signingConfigs.releaseConfig
@@ -35,6 +45,7 @@ android {
         debug {
             debuggable true
             minifyEnabled false
+            testCoverageEnabled true
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEV"
             buildConfigField "String", "API_URL", "\"http://pokeapi.co/api/v2/\""
@@ -87,82 +98,65 @@ android {
 
 dependencies {
 
-    final SUPPORT_LIBRARY_VERSION = '24.2.0'
-    final DAGGER_VERSION = '2.2'
-    final RETROFIT_VERSION = '2.0.1'
-    final OKHTTP_VERSION = '2.7.0'
-    final JUNIT_VERSION = '4.12'
-    final ESPRESSO_VERSION = '2.2.1'
-    final RUNNER_VERSION = '0.4'
-    final MOCKITO_VERSION = '1.10.19'
-    final DEXMAKER_VERSION = '1.4'
-    final HAMCREST_VERSION = '1.3'
+    // Support Libraries
+    compile deps.appCompat
+    compile deps.designCompat
+    compile deps.recyclerViewCompat
+    compile deps.cardViewCompat
+    compile deps.supportAnnotations
 
-    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
-    def jUnit = "junit:junit:4.12"
-
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-
-    // Retrofit 2
-    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
-    compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
-
-    // OkHttp
-    compile "com.squareup.okhttp:okhttp:$OKHTTP_VERSION"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-
-    // ReactiveX
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
+    // Rx Libraries
+    compile deps.rxJava
+    compile deps.rxAndroid
+    compile deps.rxMath
 
     // Butter Knife
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile deps.butterKnife
+    apt deps.butterKnifeCompiler
+
+    compile deps.dagger
+    apt deps.daggerCompiler
+
+    // Retrofit 2
+    compile deps.retrofit2
+    compile deps.gsonConverter
+    compile deps.rxJavaAdapter
+
+    // OkHttp
+    //compile "com.squareup.okhttp:okhttp:$OKHTTP_VERSION"
+    compile deps.logInterceptor
+    compile deps.digest
 
     // Timber
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile deps.timber
 
     // Circle Image View
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile deps.circleImageView
 
-    // Picasso
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    // Image Libraries
+    compile deps.picasso
+    compile deps.pollexor
 
-    compile jUnit
+    compile deps.parcelPlease
+    apt deps.parcelPleaseProcessor
 
-    compile  "com.google.dagger:dagger:$DAGGER_VERSION"
-    provided 'org.glassfish:javax.annotation:10.0-b28' //Required by Dagger2
+    debugCompile deps.leakCanary
+    releaseCompile deps.leakCanary
+    testCompile deps.leakCanary
 
-    // APT dependencies
-    apt daggerCompiler
-    testApt daggerCompiler
-    androidTestApt daggerCompiler
+    // Test libraries
+    androidTestCompile deps.espresso
+    androidTestCompile deps.runner
+    androidTestCompile deps.supportAnnotations
 
-    androidTestCompile "junit:junit:$JUNIT_VERSION"
-    androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    testCompile deps.jUnit
+    androidTestCompile(deps.jUnit) {
+        exclude module: 'hamcrest-core'
     }
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:$ESPRESSO_VERSION"
-    //androidTestCompile "com.android.support.test.uiautomator:uiautomator-v18:$UI_AUTOMATOR_VERSION"
-    androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
-    androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
-    androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 
-    testCompile "junit:junit:$JUNIT_VERSION"
-    testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
-    testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
-    testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
-    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile deps.mockito
+    androidTestCompile deps.mockito
+    compile deps.javaxInject
+
+    testApt deps.dagger
 }

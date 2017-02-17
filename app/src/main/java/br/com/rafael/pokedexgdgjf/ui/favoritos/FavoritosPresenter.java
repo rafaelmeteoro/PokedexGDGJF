@@ -1,94 +1,71 @@
 package br.com.rafael.pokedexgdgjf.ui.favoritos;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import br.com.rafael.pokedexgdgjf.R;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
-import rx.Subscriber;
+import br.com.rafael.pokedexgdgjf.ui.base.BasePresenter;
+import br.com.rafael.pokedexgdgjf.ui.iteractor.Repository;
+import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
 
 /**
  * Created by rafael on 8/29/16.
  **/
-public class FavoritosPresenter extends BaseRxPresenter<FavoritosContract.View> implements FavoritosContract.Presenter {
+public class FavoritosPresenter extends BasePresenter<FavoritosContract.View>
+        implements FavoritosContract.Presenter {
 
-    protected DataManager mDataManager;
+    private Repository mRepository;
+
+    private CompositeSubscription mSubscriptions;
 
     @Inject
-    public FavoritosPresenter(DataManager dataManager) {
-        mDataManager = dataManager;
+    public FavoritosPresenter(Repository repository) {
+        mSubscriptions = new CompositeSubscription();
+
+        mRepository = repository;
+    }
+
+    @Override
+    protected void clean() {
+        mSubscriptions.clear();
     }
 
     @Override
     public void getFavoritos() {
-        checkViewAttached();
-        showProgress();
+        FavoritosContract.View view = getView();
+        view.showProgress();
 
-        unsubscribe();
-        mSubscription = mDataManager.getPokemonsSaved()
-                .subscribe(new Subscriber<List<Pokemon>>() {
-                    @Override
-                    public void onCompleted() {
-                        hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "Erro ao carregar pokemons");
-                        hideProgress();
-                        showErro();
-                    }
-
-                    @Override
-                    public void onNext(List<Pokemon> pokemons) {
-                        if (pokemons != null && !pokemons.isEmpty()) {
-                            getMvpView().showPokemons(pokemons);
-                        } else {
-                            getMvpView().showEmpty();
-                        }
-                    }
-                });
+        mSubscriptions.add(
+                mRepository.getPokemonsSaved()
+                        .subscribe(pokemons -> {
+                            view.hideProgress();
+                            if (pokemons != null && !pokemons.isEmpty()) {
+                                view.showPokemons(pokemons);
+                            } else {
+                                view.showEmpty();
+                            }
+                        }, error -> {
+                            Timber.e(error, "Erro ao carregar pokemons");
+                            view.hideProgress();
+                            view.showErro();
+                        })
+        );
     }
 
     @Override
     public void deletePokemon(Pokemon pokemon) {
-        checkViewAttached();
+        FavoritosContract.View view = getView();
 
-        unsubscribe();
-        mSubscription = mDataManager.deletePokemon(pokemon)
-                .subscribe(new Subscriber<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-                        getFavoritos();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "Erro ao deletar pokemon");
-                    }
-
-                    @Override
-                    public void onNext(Boolean value) {
-                        if (value) {
-                            getMvpView().showMessage(R.string.activity_favorito_deleted);
-                        }
-                    }
-                });
-    }
-
-    private void showProgress() {
-        getMvpView().showProgress();
-    }
-
-    private void hideProgress() {
-        getMvpView().hideProgress();
-    }
-
-    private void showErro() {
-        getMvpView().showErro();
+        mSubscriptions.add(
+                mRepository.deletePokemon(pokemon)
+                        .subscribe(isDeleted -> {
+                            if (isDeleted) {
+                                view.showMessage();
+                                getFavoritos();
+                            }
+                        }, error -> {
+                            Timber.e(error, "Erro ao deletar pokemon");
+                        })
+        );
     }
 }

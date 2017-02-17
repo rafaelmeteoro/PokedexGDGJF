@@ -1,36 +1,29 @@
 package br.com.rafael.pokedexgdgjf.injection.component;
 
-import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
-import br.com.rafael.pokedexgdgjf.PokedexApplication;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
-import br.com.rafael.pokedexgdgjf.injection.ApplicationContext;
 import br.com.rafael.pokedexgdgjf.injection.module.ApplicationModule;
-import br.com.rafael.pokedexgdgjf.injection.module.NetworkModule;
+import br.com.rafael.pokedexgdgjf.ui.base.BaseActivity;
 import dagger.Component;
-import retrofit2.Retrofit;
+import rx.Scheduler;
 
 /**
  * Created by rafael on 8/25/16.
  **/
 @Singleton
-@Component(modules = {
-        ApplicationModule.class,
-        NetworkModule.class
-})
+@Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
 
-    void inject(PokedexApplication application);
+    void inject(BaseActivity activity);
 
-    @ApplicationContext
     Context context();
 
-    Application application();
+    @Named(ApplicationModule.MAIN_THREAD)
+    Scheduler mainThreadScheduler();
 
-    DataManager dataManager();
-
-    Retrofit retrofit();
+    @Named(ApplicationModule.JOB_THREAD)
+    Scheduler jobScheduler();
 }

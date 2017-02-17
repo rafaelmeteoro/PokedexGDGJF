@@ -3,12 +3,13 @@ package br.com.rafael.pokedexgdgjf.injection;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Qualifier;
+import javax.inject.Scope;
 
 /**
- * Created by rafael on 8/25/16.
+ * Created by rafael on 2/15/17.
  **/
-@Qualifier
+
+@Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ActivityContext {
+public @interface PerFragment {
 }

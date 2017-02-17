@@ -19,10 +19,14 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import br.com.rafael.pokedexgdgjf.R;
+import br.com.rafael.pokedexgdgjf.application.PokedexApplication;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
-import br.com.rafael.pokedexgdgjf.injection.component.ActivityComponent;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseMvpActivity;
-import butterknife.Bind;
+import br.com.rafael.pokedexgdgjf.injection.HasComponent;
+import br.com.rafael.pokedexgdgjf.ui.base.BaseActivity;
+import br.com.rafael.pokedexgdgjf.ui.di.component.DaggerPokemonComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.component.PokemonComponent;
+import br.com.rafael.pokedexgdgjf.ui.di.module.PokemonModule;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,40 +34,43 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by rafael on 8/29/16.
  **/
-public class PokemonActivity extends BaseMvpActivity implements PokemonContract.View {
+public class PokemonActivity extends BaseActivity
+        implements PokemonContract.View, HasComponent<PokemonComponent> {
 
     public static final String EXTRA_POKEMON_ID = "EXTRA_POKEMON_ID";
     private static final int DEFAULT_ID = 0;
 
     @Inject
-    protected PokemonPresenter mPresenter;
+    protected PokemonContract.Presenter mPresenter;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
 
-    @Bind(R.id.content_view)
+    @BindView(R.id.content_view)
     protected ScrollView mContentView;
 
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     protected ProgressBar mLoadingView;
 
-    @Bind(R.id.error_view)
+    @BindView(R.id.error_view)
     protected TextView mErrorView;
 
-    @Bind(R.id.iv_pokemon)
+    @BindView(R.id.iv_pokemon)
     protected CircleImageView pokemonImage;
 
-    @Bind(R.id.pokemon_name)
+    @BindView(R.id.pokemon_name)
     protected TextView pokemonName;
 
-    @Bind(R.id.pokemon_weight)
+    @BindView(R.id.pokemon_weight)
     protected TextView pokemonWeight;
 
-    @Bind(R.id.pokemon_height)
+    @BindView(R.id.pokemon_height)
     protected TextView pokemonHeight;
 
     private int mPokemonId;
     private Pokemon mPokemon;
+
+    PokemonComponent mComponent;
 
     public static Intent getStartIntent(Context context, int pokemonId) {
         Intent intent = new Intent(context, PokemonActivity.class);
@@ -76,26 +83,61 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon);
         ButterKnife.bind(this);
-        mPresenter.attachView(this);
 
+        initializeToolBar();
+        initializeInjection();
+        initialize();
+        initializePresenter();
+        initializeContents();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializePresenter();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+    }
+
+    private void initialize() {
+        mPokemonId = getIntent().getIntExtra(EXTRA_POKEMON_ID, DEFAULT_ID);
+    }
+
+    private void initializeToolBar() {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
 
-        mPokemonId = getIntent().getIntExtra(EXTRA_POKEMON_ID, DEFAULT_ID);
+    private void initializeInjection() {
+        mComponent = DaggerPokemonComponent.builder()
+                .libraryComponent(((PokedexApplication) getApplication()).getComponent())
+                .activityModule(getActivityModule())
+                .pokemonModule(new PokemonModule())
+                .build();
+        mComponent.inject(this);
+    }
+
+    private void initializePresenter() {
+        if (mPresenter != null) {
+            mPresenter.attachView(this);
+        }
+    }
+
+    private void initializeContents() {
         mPresenter.getPokemon(mPokemonId);
     }
 
     @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        super.onDestroy();
-    }
-
-    @Override
-    protected void inject(ActivityComponent activityComponent) {
-        activityComponent.inject(this);
+    public PokemonComponent getComponent() {
+        return mComponent;
     }
 
     @Override
@@ -182,8 +224,11 @@ public class PokemonActivity extends BaseMvpActivity implements PokemonContract.
     }
 
     @Override
-    public void showMessage(int resId) {
-        Snackbar snackbar = Snackbar.make(mContentView, resId, Snackbar.LENGTH_LONG);
+    public void showMessage() {
+        Snackbar snackbar = Snackbar.make(
+                mContentView,
+                R.string.activity_pokemon_saved,
+                Snackbar.LENGTH_LONG);
         snackbar.show();
     }
 }

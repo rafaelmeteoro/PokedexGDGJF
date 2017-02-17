@@ -2,93 +2,70 @@ package br.com.rafael.pokedexgdgjf.ui.pokemon;
 
 import javax.inject.Inject;
 
-import br.com.rafael.pokedexgdgjf.R;
-import br.com.rafael.pokedexgdgjf.data.DataManager;
 import br.com.rafael.pokedexgdgjf.data.model.Pokemon;
-import br.com.rafael.pokedexgdgjf.ui.base.BaseRxPresenter;
-import rx.Subscriber;
+import br.com.rafael.pokedexgdgjf.ui.base.BasePresenter;
+import br.com.rafael.pokedexgdgjf.ui.iteractor.GetPokemon;
+import br.com.rafael.pokedexgdgjf.ui.iteractor.Repository;
+import rx.subscriptions.CompositeSubscription;
+import timber.log.Timber;
 
 /**
  * Created by rafael on 8/29/16.
  **/
-public class PokemonPresenter extends BaseRxPresenter<PokemonContract.View> implements PokemonContract.Presenter {
+public class PokemonPresenter extends BasePresenter<PokemonContract.View>
+        implements PokemonContract.Presenter {
 
-    protected DataManager mDataManager;
+    private GetPokemon mGetPokemon;
+    private Repository mRepository;
+
+    private CompositeSubscription mSubscriptions;
 
     @Inject
-    public PokemonPresenter(DataManager dataManager) {
-        mDataManager = dataManager;
+    public PokemonPresenter(GetPokemon getPokemon, Repository repository) {
+        mGetPokemon = getPokemon;
+        mRepository = repository;
+
+        mSubscriptions = new CompositeSubscription();
+    }
+
+    @Override
+    protected void clean() {
+        mSubscriptions.clear();
     }
 
     @Override
     public void getPokemon(int pokemonId) {
-        checkViewAttached();
-        showProgress();
+        PokemonContract.View view = getView();
+        view.showProgress();
 
-        unsubscribe();
-        mSubscription = mDataManager.getPokemon(pokemonId)
-                .subscribe(new Subscriber<Pokemon>() {
-                    @Override
-                    public void onCompleted() {
-                        hideProgress();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideProgress();
-                        showError();
-                    }
-
-                    @Override
-                    public void onNext(Pokemon pokemon) {
-                        showPokemon(pokemon);
-                    }
-                });
+        mSubscriptions.add(
+                mGetPokemon.execute(pokemonId)
+                        .subscribe(pokemon -> {
+                            view.showPokemonName(pokemon.getName());
+                            view.showPokemonHeight(pokemon.getHeight());
+                            view.showPokemonWeight(pokemon.getWeight());
+                            view.showPokemonImage(pokemon.getSprites().getFrontDefault());
+                            view.showPokemon(pokemon);
+                            view.hideProgress();
+                        }, error -> {
+                            Timber.e(error, "Erro ao carregar PokemonId: " + pokemonId);
+                            view.hideProgress();
+                            view.showError();
+                        })
+        );
     }
 
     @Override
     public void savePokmon(Pokemon pokemon) {
-        checkViewAttached();
+        PokemonContract.View view = getView();
 
-        unsubscribe();
-        mSubscription = mDataManager.saveUpdatePokemon(pokemon)
-                .subscribe(new Subscriber<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Boolean value) {
-                        if (value) {
-                            getMvpView().showMessage(R.string.activity_pokemon_saved);
-                        }
-                    }
-                });
-    }
-
-    private void showProgress() {
-        getMvpView().showProgress();
-    }
-
-    private void hideProgress() {
-        getMvpView().hideProgress();
-    }
-
-    private void showError() {
-        getMvpView().showError();
-    }
-
-    private void showPokemon(Pokemon pokemon) {
-        getMvpView().showPokemonName(pokemon.getName());
-        getMvpView().showPokemonHeight(pokemon.getHeight());
-        getMvpView().showPokemonWeight(pokemon.getWeight());
-        getMvpView().showPokemonImage(pokemon.getSprites().getFrontDefault());
-        getMvpView().showPokemon(pokemon);
+        mSubscriptions.add(
+                mRepository.saveUpdatePokemon(pokemon)
+                        .subscribe(isSaved -> {
+                            if (isSaved) {
+                                view.showMessage();
+                            }
+                        })
+        );
     }
 }

@@ -1,0 +1,91 @@
+def GRADLE_VERSION = '2.2.1'
+
+// Android
+def SUPPORT_LIBRARY_VERSION = '24.2.1'
+
+def RX_JAVA_VERSION = '1.2.3'
+def RX_ANDROID_VERSION = '1.2.1'
+def RX_MATH_VERSION = '1.0.0'
+def RX_LIFECYCLE_VERSION = '0.6.1'
+
+def RETROFIT2_VERSION = '2.1.0'
+def LOG_INTERCEPTOR_VERSION = '3.3.1'
+def DIGEST_VERSION = '1.5'
+
+def PARCEL_PLEASE_VERSION = '1.0.2'
+def BUTTERKNIFE_VERSION = '8.4.0'
+def DAGGER_VERSION = '2.4'
+
+def LEAK_CANARY_VERSION = '1.5'
+
+def TIMBER_VERSION = '4.1.2'
+
+def CIRCLE_IMAGE_VIEW_VERSION = '2.1.0'
+
+def PICASSO_VERSION = '2.5.2'
+def POLLEXOR_VERSION = '2.0.4'
+
+// Test
+def MOCKITO_VERSION = '1.10.19'
+def ESPRESSO_VERSION = '2.2.2'
+def RUNNER_VERSION = '0.5'
+def JUNIT_VERSION = '4.12'
+def JAVAX_INJECT_VERSION = '1'
+
+ext.deps = [
+        gradle : "com.android.tools.build:gradle:$GRADLE_VERSION",
+
+        // Support Libraries
+        appCompat           : "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION",
+        supportV4           : "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION",
+        designCompat        : "com.android.support:design:$SUPPORT_LIBRARY_VERSION",
+        recyclerViewCompat  : "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION",
+        cardViewCompat      : "com.android.support:cardview-v7:$SUPPORT_LIBRARY_VERSION",
+        supportAnnotations  : "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION",
+
+        // Rx Libraries
+        rxJava                  : "io.reactivex:rxjava:$RX_JAVA_VERSION",
+        rxAndroid               : "io.reactivex:rxandroid:$RX_ANDROID_VERSION",
+        rxMath                  : "io.reactivex:rxjava-math:$RX_MATH_VERSION",
+        rxLifeCycle             : "com.trello:rxlifecycle:$RX_LIFECYCLE_VERSION",
+        rxLifeCycleComponents   : "com.trello:rxlifecycle-components:$RX_LIFECYCLE_VERSION",
+
+        // Networking Libraries
+        retrofit2       : "com.squareup.retrofit2:retrofit:$RETROFIT2_VERSION",
+        gsonConverter   : "com.squareup.retrofit2:converter-gson:$RETROFIT2_VERSION",
+        rxJavaAdapter   : "com.squareup.retrofit2:adapter-rxjava:$RETROFIT2_VERSION",
+        logInterceptor  : "com.squareup.okhttp3:logging-interceptor:$LOG_INTERCEPTOR_VERSION",
+        digest          : "com.burgstaller:okhttp-digest:$DIGEST_VERSION",
+
+        // Model Parceler
+        parcelPlease            : "com.hannesdorfmann.parcelableplease:annotation:$PARCEL_PLEASE_VERSION",
+        parcelPleaseProcessor   : "com.hannesdorfmann.parcelableplease:processor:$PARCEL_PLEASE_VERSION",
+
+        // View and Resource Injection
+        butterKnife         : "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION",
+        butterKnifeCompiler : "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION",
+
+        // Dependency Injection
+        dagger          : "com.google.dagger:dagger:$DAGGER_VERSION",
+        daggerCompiler  : "com.google.dagger:dagger-compiler:$DAGGER_VERSION",
+
+        leakCanary      : "com.squareup.leakcanary:leakcanary-android:$LEAK_CANARY_VERSION",
+        leakCanaryTest  : "com.squareup.leakcanary:leakcanary-android-no-op:$LEAK_CANARY_VERSION",
+
+        // Timber
+        timber : "com.jakewharton.timber:timber:$TIMBER_VERSION",
+
+        // Circle Image View
+        circleImageView : "de.hdodenhof:circleimageview:$CIRCLE_IMAGE_VIEW_VERSION",
+
+        // Imaging Libraries
+        picasso     : "com.squareup.picasso:picasso:$PICASSO_VERSION",
+        pollexor    : "com.squareup:pollexor:$POLLEXOR_VERSION",
+
+        // Test Libraries
+        espresso    : "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION",
+        runner      : "com.android.support.test:runner:$RUNNER_VERSION",
+        jUnit       : "junit:junit:$JUNIT_VERSION",
+        mockito     : "org.mockito:mockito-core:$MOCKITO_VERSION",
+        javaxInject : "javax.inject:javax.inject:$JAVAX_INJECT_VERSION"
+]
